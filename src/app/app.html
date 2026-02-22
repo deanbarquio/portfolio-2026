@@ -1,0 +1,277 @@
+<!-- ══════════ NAVBAR ══════════ -->
+<nav class="navbar">
+  <div class="container nav-content">
+    <div class="logo">Dean<span>.</span>dev</div>
+    <ul class="nav-links">
+      <li><a href="#hero">About</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#tech">Stack</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-gold">Hire Me</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ══════════ HERO ══════════ -->
+  <section id="hero" class="hero-section">
+    <div class="container hero-container">
+
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span class="dot-blink"></span>
+          Open to Opportunities
+        </div>
+        <h1 class="hero-name">DEAN<br>BARQUIO</h1>
+        <div class="hero-title-line">IT Developer &amp; Project Manager</div>
+        <p class="hero-desc">{{ professionalSummary() }}</p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn btn-primary">View Projects</a>
+          <a href="#contact" class="btn btn-outline">Get In Touch</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="num">5<span>+</span></div>
+            <div class="lbl">Live Projects</div>
+          </div>
+          <div class="stat-item">
+            <div class="num">4<span>+</span></div>
+            <div class="lbl">Years Studying</div>
+          </div>
+          <div class="stat-item">
+            <div class="num">4<span>★</span></div>
+            <div class="lbl">Awards Won</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-image-side">
+        <div class="profile-frame">
+          <div class="profile-img-wrap">
+            <img src="profile.png" alt="Dean Lourence P. Barquio" class="profile-img" />
+          </div>
+          <div class="img-ring"></div>
+          <div class="floating-badge badge-1">
+            <div class="bi">🏆</div>
+            <div>
+              <strong>Magna Cum Laude</strong>
+              <span>Outstanding Graduate</span>
+            </div>
+          </div>
+          <div class="floating-badge badge-2">
+            <div class="bi">⚡</div>
+            <div>
+              <strong>Full-Stack Dev</strong>
+              <span>Angular · React · Node</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════ EDUCATION & EXPERIENCES ══════════ -->
+  <section id="education" class="edu-exp-section">
+    <div class="blob blob-1 edu-blob-l"></div>
+    <div class="blob blob-2 edu-blob-r"></div>
+
+    <div class="container edu-exp-inner">
+
+      <h2 class="list-section-title">EDUCATION</h2>
+      <div class="edu-list">
+        @for (edu of education(); track edu.degree) {
+        <div class="edu-row">
+          <div class="edu-year">{{ edu.year }}</div>
+          <div class="edu-body">
+            <h4>{{ edu.degree }}</h4>
+            <p>{{ edu.school }}</p>
+          </div>
+        </div>
+        }
+      </div>
+
+      <h2 class="list-section-title">EXPERIENCES</h2>
+      <div class="edu-list">
+        @for (exp of experiences(); track exp.role + exp.year) {
+        <div class="edu-row">
+          <div class="edu-year">{{ exp.year }}</div>
+          <div class="edu-body">
+            <h4>{{ exp.role }}</h4>
+            <p>{{ exp.org }}</p>
+          </div>
+        </div>
+        }
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════ TECH STACK ══════════ -->
+  <section id="tech" class="tech-section">
+    <div class="blob blob-3 tech-blob-l"></div>
+    <div class="blob blob-1 tech-blob-r"></div>
+
+    <div class="container">
+      <div class="tech-title">TECH STACK</div>
+
+      <div class="bubble-cloud">
+        @for (tech of techStack(); track tech.name) {
+        <div class="bubble" [title]="tech.name" [class.bubble-xl]="tech.size === 'xl'"
+          [class.bubble-lg]="tech.size === 'lg'" [class.bubble-md]="tech.size === 'md'"
+          [class.bubble-sm]="tech.size === 'sm'">
+          @if (tech.isText) {
+          <span class="bubble-text">{{ tech.icon }}</span>
+          } @else {
+          <span
+            [style.fontSize]="tech.size === 'xl' ? '3.5rem' : tech.size === 'lg' ? '2.8rem' : tech.size === 'md' ? '2.2rem' : '1.6rem'">
+            {{ tech.icon }}
+          </span>
+          }
+        </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ PROJECTS – STEPPER ══════════ -->
+  <section id="projects" class="projects-section">
+    <div class="blob blob-1 proj-blob proj-blob-r"></div>
+    <div class="blob blob-3 proj-blob proj-blob-l"></div>
+
+    <div class="container">
+
+      <div class="projects-header">
+        <span class="section-eyebrow">Portfolio</span>
+        <h2>Featured Projects</h2>
+      </div>
+
+      <!-- Stepper Spine -->
+      <div class="stepper">
+
+        @for (project of projects(); track project.num; let i = $index) {
+
+        <!-- Even index = mockup LEFT / info RIGHT | Odd = info LEFT / mockup RIGHT -->
+        <div class="step-row" [class.alt]="i % 2 !== 0">
+
+          <!-- LEFT slot -->
+          <div class="step-left">
+            @if (i % 2 === 0) {
+            <!-- MOCKUP on left for even -->
+            <div class="tablet-frame">
+              <div class="mockup-window-dots"><span></span><span></span><span></span></div>
+              <div class="tablet-screen">
+                <div class="mockup-placeholder">
+                  <div class="mp-icon">{{ project.mockupEmoji }}</div>
+                  <div class="mp-label">{{ project.title }}</div>
+                </div>
+              </div>
+            </div>
+            } @else {
+            <!-- INFO on left for odd -->
+            <div class="proj-info" style="text-align:right">
+              <div class="proj-number">{{ project.num }} / 05</div>
+              <h2 class="proj-title">{{ project.title }}</h2>
+              <div class="proj-subtitle">{{ project.subtitle }}</div>
+              <p class="proj-desc" style="margin-left:auto">{{ project.description }}</p>
+              <div class="tech-stack-label">Technology Stack</div>
+              <div class="proj-tech-icons" style="justify-content:flex-end">
+                @for (icon of project.tech; track $index) {
+                <div class="proj-tech-icon" [title]="project.techNames[$index]">{{ icon }}</div>
+                }
+              </div>
+            </div>
+            }
+          </div>
+
+          <!-- CENTER: Numbered Node -->
+          <div class="step-node">
+            <div class="step-circle">{{ project.num }}</div>
+          </div>
+
+          <!-- RIGHT slot -->
+          <div class="step-right">
+            @if (i % 2 === 0) {
+            <!-- INFO on right for even -->
+            <div class="proj-info">
+              <div class="proj-number">{{ project.num }} / 05</div>
+              <h2 class="proj-title">{{ project.title }}</h2>
+              <div class="proj-subtitle">{{ project.subtitle }}</div>
+              <p class="proj-desc">{{ project.description }}</p>
+              <div class="tech-stack-label">Technology Stack</div>
+              <div class="proj-tech-icons">
+                @for (icon of project.tech; track $index) {
+                <div class="proj-tech-icon" [title]="project.techNames[$index]">{{ icon }}</div>
+                }
+              </div>
+            </div>
+            } @else {
+            <!-- MOCKUP on right for odd -->
+            <div class="tablet-frame">
+              <div class="mockup-window-dots"><span></span><span></span><span></span></div>
+              <div class="tablet-screen">
+                <div class="mockup-placeholder">
+                  <div class="mp-icon">{{ project.mockupEmoji }}</div>
+                  <div class="mp-label">{{ project.title }}</div>
+                </div>
+              </div>
+            </div>
+            }
+          </div>
+
+        </div>
+        }
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ CONTACT ══════════ -->
+  <section id="contact" class="contact-section">
+    <div class="container contact-inner">
+      <span class="contact-eyebrow">Let's connect</span>
+      <h2>Let's Work<br><span>Together.</span></h2>
+      <p>Looking for a dedicated IT student who delivers results? Let's build something great.</p>
+
+      <div class="hero-btns" style="justify-content:center">
+        <a href="mailto:deanbarquio@gmail.com" class="btn btn-primary">Send Email →</a>
+        <a href="tel:+639480008380" class="btn btn-outline">+63 948 000 8380</a>
+      </div>
+
+      <div class="contact-methods">
+        <div class="contact-chip">
+          <span class="chip-icon">📧</span>
+          <div>
+            <span class="chip-label">Email</span>
+            <span class="chip-val">deanbarquio&#64;gmail.com</span>
+          </div>
+        </div>
+        <div class="contact-chip">
+          <span class="chip-icon">📱</span>
+          <div>
+            <span class="chip-label">Phone</span>
+            <span class="chip-val">+63 948 000 8380</span>
+          </div>
+        </div>
+        <div class="contact-chip">
+          <span class="chip-icon">📍</span>
+          <div>
+            <span class="chip-label">Location</span>
+            <span class="chip-val">Consolacion, Cebu, PH</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2026 <span>{{ name() }}</span>. Built with Angular 21.</p>
+  </div>
+</footer>
