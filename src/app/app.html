@@ -1,270 +1,371 @@
 <!-- ══════════ NAVBAR ══════════ -->
 <nav class="navbar">
-  <div class="container nav-content">
-    <div class="logo">Dean<span>.</span>dev</div>
+  <div class="nav-content">
+    <div class="logo">DEAN <span>.</span> BARQUIO</div>
     <ul class="nav-links">
-      <li><a href="#hero">About</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#tech">Stack</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a (click)="scrollTo('hero', $event)" href="#hero" class="nav-link"><i>01</i> // home</a></li>
+      <li><a (click)="scrollTo('expertise', $event)" href="#expertise" class="nav-link"><i>02</i> // expertise</a></li>
+      <li><a (click)="scrollTo('experience', $event)" href="#experience" class="nav-link"><i>03</i> // experience</a>
+      </li>
+      <li><a (click)="scrollTo('work', $event)" href="#work" class="nav-link"><i>04</i> // work</a></li>
+      <li><a (click)="scrollTo('contact', $event)" href="#contact" class="nav-link"><i>05</i> // contact</a></li>
     </ul>
-    <div class="nav-cta">
-      <a href="#contact" class="btn btn-gold">Hire Me</a>
+    <div class="nav-trailing">
+      <button
+        type="button"
+        class="theme-switch"
+        role="switch"
+        [attr.aria-checked]="theme() === 'dark' ? 'true' : 'false'"
+        [attr.aria-label]="theme() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'"
+        (click)="toggleTheme()">
+        <span class="theme-switch__track" aria-hidden="true">
+          <span class="theme-switch__knob"></span>
+        </span>
+      </button>
+      <div class="nav-cta">
+        <a href="mailto:deanbarquio@gmail.com" class="btn btn-outline">Let's Talk</a>
+      </div>
     </div>
   </div>
 </nav>
 
 <main>
 
-  <!-- ══════════ HERO ══════════ -->
-  <section id="hero" class="hero-section">
-    <div class="container hero-container">
+  <!-- ══════════ HERO SECTION – Adham Dannaway Inspired Split ══════════ -->
+  <section #heroSection id="hero" class="split-hero">
+    
+    <!-- LEFT SIDE: DESIGNER -->
+    <div class="split-side designer-side">
+      <div class="split-inner">
+        
+        <div class="split-content left-content">
+          <h1 class="split-title">Designer</h1>
+          <p class="split-desc">Product designer specialising in UI design, crafting seamless and beautiful digital experiences.</p>
+        </div>
 
-      <div class="hero-left">
-        <div class="hero-badge">
-          <span class="dot-blink"></span>
-          Open to Opportunities
-        </div>
-        <h1 class="hero-name">DEAN<br>BARQUIO</h1>
-        <div class="hero-title-line">IT Developer &amp; Project Manager</div>
-        <p class="hero-desc">{{ professionalSummary() }}</p>
-        <div class="hero-btns">
-          <a href="#projects" class="btn btn-primary">View Projects</a>
-          <a href="#contact" class="btn btn-outline">Get In Touch</a>
-        </div>
-        <div class="hero-stats">
-          <div class="stat-item">
-            <div class="num">5<span>+</span></div>
-            <div class="lbl">Live Projects</div>
-          </div>
-          <div class="stat-item">
-            <div class="num">4<span>+</span></div>
-            <div class="lbl">Years Studying</div>
-          </div>
-          <div class="stat-item">
-            <div class="num">4<span>★</span></div>
-            <div class="lbl">Awards Won</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-image-side">
-        <div class="profile-frame">
-          <div class="profile-img-wrap">
-            <img src="profile.png" alt="Dean Lourence P. Barquio" class="profile-img" />
-          </div>
-          <div class="img-ring"></div>
-          <div class="floating-badge badge-1">
-            <div class="bi">🏆</div>
-            <div>
-              <strong>Magna Cum Laude</strong>
-              <span>Outstanding Graduate</span>
+        <!-- Designer Avatar Half -->
+        <div class="profile-half">
+          <div class="avatar-container">
+            <div class="avatar-head designer-head">
+              <div class="glasses"></div>
             </div>
-          </div>
-          <div class="floating-badge badge-2">
-            <div class="bi">⚡</div>
-            <div>
-              <strong>Full-Stack Dev</strong>
-              <span>Angular · React · Node</span>
+            <div class="avatar-body designer-body">
+              <div class="shirt-collar"></div>
             </div>
           </div>
         </div>
+
       </div>
-
     </div>
-  </section>
 
-  <!-- ══════════ EDUCATION & EXPERIENCES ══════════ -->
-  <section id="education" class="edu-exp-section">
-    <div class="blob blob-1 edu-blob-l"></div>
-    <div class="blob blob-2 edu-blob-r"></div>
+    <!-- RIGHT SIDE: CODER -->
+    <div class="split-side coder-side">
+      <div class="split-inner">
+        
+        <div class="split-content right-content">
+          <h1 class="split-title">&lt;coder&gt;</h1>
+          <p class="split-desc">Front end developer writing clean, elegant and efficient code for scalable applications.</p>
+        </div>
 
-    <div class="container edu-exp-inner">
-
-      <h2 class="list-section-title">EDUCATION</h2>
-      <div class="edu-list">
-        @for (edu of education(); track edu.degree) {
-        <div class="edu-row">
-          <div class="edu-year">{{ edu.year }}</div>
-          <div class="edu-body">
-            <h4>{{ edu.degree }}</h4>
-            <p>{{ edu.school }}</p>
+        <!-- Coder Avatar Half -->
+        <div class="profile-half">
+          <div class="avatar-container">
+            <div class="avatar-head coder-head"></div>
+            <div class="avatar-body coder-body">
+              <div class="hoodie-drawstrings"></div>
+            </div>
           </div>
         </div>
-        }
-      </div>
 
-      <h2 class="list-section-title">EXPERIENCES</h2>
-      <div class="edu-list">
-        @for (exp of experiences(); track exp.role + exp.year) {
-        <div class="edu-row">
-          <div class="edu-year">{{ exp.year }}</div>
-          <div class="edu-body">
-            <h4>{{ exp.role }}</h4>
-            <p>{{ exp.org }}</p>
-          </div>
-        </div>
-        }
       </div>
-
     </div>
-  </section>
 
-  <!-- ══════════ TECH STACK ══════════ -->
-  <section id="tech" class="tech-section">
-    <div class="blob blob-3 tech-blob-l"></div>
-    <div class="blob blob-1 tech-blob-r"></div>
-
-    <div class="container">
-      <div class="tech-title">TECH STACK</div>
-
-      <div class="bubble-cloud">
-        @for (tech of techStack(); track tech.name) {
-        <div class="bubble" [title]="tech.name" [class.bubble-xl]="tech.size === 'xl'"
-          [class.bubble-lg]="tech.size === 'lg'" [class.bubble-md]="tech.size === 'md'"
-          [class.bubble-sm]="tech.size === 'sm'">
-          @if (tech.isText) {
-          <span class="bubble-text">{{ tech.icon }}</span>
-          } @else {
-          <span
-            [style.fontSize]="tech.size === 'xl' ? '3.5rem' : tech.size === 'lg' ? '2.8rem' : tech.size === 'md' ? '2.2rem' : '1.6rem'">
-            {{ tech.icon }}
-          </span>
-          }
-        </div>
-        }
+    <div class="scroll-indicator split-scroll-indicator">
+      <div class="mouse">
+        <div class="wheel"></div>
       </div>
     </div>
   </section>
 
-  <!-- ══════════ PROJECTS – STEPPER ══════════ -->
-  <section id="projects" class="projects-section">
-    <div class="blob blob-1 proj-blob proj-blob-r"></div>
-    <div class="blob blob-3 proj-blob proj-blob-l"></div>
+  <!-- ══════════ Education / workshops / achievements — Van Holtz “next project” style ══════════ -->
+  <section id="background" class="edu-vh" #educationSection>
+    <canvas #educationCanvas class="edu-vh__canvas" aria-hidden="true"></canvas>
 
-    <div class="container">
-
-      <div class="projects-header">
-        <span class="section-eyebrow">Portfolio</span>
-        <h2>Featured Projects</h2>
+    <div class="edu-vh__shell">
+      <div class="edu-vh__hero">
+        <p class="edu-vh__next-label">next chapter</p>
+        <div class="edu-vh__mega" aria-hidden="false">
+          <span class="edu-vh__mega-line">Education</span>
+          <span class="edu-vh__mega-line">Workshops</span>
+          <span class="edu-vh__mega-line">&amp; achievements</span>
+        </div>
       </div>
 
-      <!-- Stepper Spine -->
-      <div class="stepper">
-
-        @for (project of projects(); track project.num; let i = $index) {
-
-        <!-- Even index = mockup LEFT / info RIGHT | Odd = info LEFT / mockup RIGHT -->
-        <div class="step-row" [class.alt]="i % 2 !== 0">
-
-          <!-- LEFT slot -->
-          <div class="step-left">
-            @if (i % 2 === 0) {
-            <!-- MOCKUP on left for even -->
-            <div class="tablet-frame">
-              <div class="mockup-window-dots"><span></span><span></span><span></span></div>
-              <div class="tablet-screen">
-                <div class="mockup-placeholder">
-                  <div class="mp-icon">{{ project.mockupEmoji }}</div>
-                  <div class="mp-label">{{ project.title }}</div>
-                </div>
+      <div class="edu-vh__columns">
+        <article class="edu-vh__col">
+          <header class="edu-vh__col-head">
+            <span class="edu-vh__idx">01</span>
+            <h3 class="edu-vh__col-title">Tertiary education</h3>
+          </header>
+          <div class="edu-vh__stack">
+            @for (edu of tertiaryEducation(); track edu.school) {
+            <details class="edu-vh__details" open>
+              <summary class="edu-vh__summary">
+                <span class="edu-vh__year">{{ edu.year }}</span>
+                <span class="edu-vh__row-title">{{ edu.degree }}</span>
+                <span class="edu-vh__toggle-icon" aria-hidden="true"></span>
+              </summary>
+              <div class="edu-vh__body">
+                <p>{{ edu.school }}</p>
               </div>
-            </div>
-            } @else {
-            <!-- INFO on left for odd -->
-            <div class="proj-info" style="text-align:right">
-              <div class="proj-number">{{ project.num }} / 05</div>
-              <h2 class="proj-title">{{ project.title }}</h2>
-              <div class="proj-subtitle">{{ project.subtitle }}</div>
-              <p class="proj-desc" style="margin-left:auto">{{ project.description }}</p>
-              <div class="tech-stack-label">Technology Stack</div>
-              <div class="proj-tech-icons" style="justify-content:flex-end">
-                @for (icon of project.tech; track $index) {
-                <div class="proj-tech-icon" [title]="project.techNames[$index]">{{ icon }}</div>
-                }
-              </div>
-            </div>
+            </details>
             }
           </div>
+        </article>
 
-          <!-- CENTER: Numbered Node -->
-          <div class="step-node">
-            <div class="step-circle">{{ project.num }}</div>
-          </div>
-
-          <!-- RIGHT slot -->
-          <div class="step-right">
-            @if (i % 2 === 0) {
-            <!-- INFO on right for even -->
-            <div class="proj-info">
-              <div class="proj-number">{{ project.num }} / 05</div>
-              <h2 class="proj-title">{{ project.title }}</h2>
-              <div class="proj-subtitle">{{ project.subtitle }}</div>
-              <p class="proj-desc">{{ project.description }}</p>
-              <div class="tech-stack-label">Technology Stack</div>
-              <div class="proj-tech-icons">
-                @for (icon of project.tech; track $index) {
-                <div class="proj-tech-icon" [title]="project.techNames[$index]">{{ icon }}</div>
-                }
+        <article class="edu-vh__col">
+          <header class="edu-vh__col-head">
+            <span class="edu-vh__idx">02</span>
+            <h3 class="edu-vh__col-title">Workshops</h3>
+          </header>
+          <div class="edu-vh__stack">
+            @for (t of trainings(); track t.title) {
+            <details class="edu-vh__details" open>
+              <summary class="edu-vh__summary">
+                <span class="edu-vh__year">{{ t.year }}</span>
+                <span class="edu-vh__row-title">{{ t.title }}</span>
+                <span class="edu-vh__toggle-icon" aria-hidden="true"></span>
+              </summary>
+              <div class="edu-vh__body">
+                <p>{{ t.description }}</p>
               </div>
-            </div>
-            } @else {
-            <!-- MOCKUP on right for odd -->
-            <div class="tablet-frame">
-              <div class="mockup-window-dots"><span></span><span></span><span></span></div>
-              <div class="tablet-screen">
-                <div class="mockup-placeholder">
-                  <div class="mp-icon">{{ project.mockupEmoji }}</div>
-                  <div class="mp-label">{{ project.title }}</div>
-                </div>
-              </div>
-            </div>
+            </details>
             }
           </div>
+        </article>
 
+        <article class="edu-vh__col">
+          <header class="edu-vh__col-head">
+            <span class="edu-vh__idx">03</span>
+            <h3 class="edu-vh__col-title">Achievements</h3>
+          </header>
+          <div class="edu-vh__stack">
+            @for (ach of achievements(); track ach.title) {
+            <details class="edu-vh__details">
+              <summary class="edu-vh__summary">
+                <span class="edu-vh__year">0{{ $index + 1 }}</span>
+                <span class="edu-vh__row-title">{{ ach.title }}</span>
+                <span class="edu-vh__toggle-icon" aria-hidden="true"></span>
+              </summary>
+              <div class="edu-vh__body">
+                <p>{{ ach.detail }}</p>
+              </div>
+            </details>
+            }
+          </div>
+        </article>
+      </div>
+
+      <div class="edu-vh__marquee" aria-hidden="true">
+        <div class="edu-vh__marquee-track">
+          <div class="edu-vh__marquee-chunk">
+            <span>University of Cebu</span><span class="edu-vh__dot">·</span>
+            <span>BS Information Technology</span><span class="edu-vh__dot">·</span>
+            <span>Alliance Jumpstart</span><span class="edu-vh__dot">·</span>
+            <span>Magna Cum Laude</span><span class="edu-vh__dot">·</span>
+            <span>PSITS</span><span class="edu-vh__dot">·</span>
+          </div>
+          <div class="edu-vh__marquee-chunk">
+            <span>University of Cebu</span><span class="edu-vh__dot">·</span>
+            <span>BS Information Technology</span><span class="edu-vh__dot">·</span>
+            <span>Alliance Jumpstart</span><span class="edu-vh__dot">·</span>
+            <span>Magna Cum Laude</span><span class="edu-vh__dot">·</span>
+            <span>PSITS</span><span class="edu-vh__dot">·</span>
+          </div>
         </div>
-        }
-
       </div>
     </div>
   </section>
 
-  <!-- ══════════ CONTACT ══════════ -->
+  <!-- ══════════ EXPERTISE SECTION – Tamal Sen Replica ══════════ -->
+  <section id="expertise" class="expertise-section">
+    <div class="container">
+      <h2 class="expertise-title">My Expertise</h2>
+
+      <div class="expertise-outer-box">
+        <!-- Floating Background Code Snippet -->
+        <div class="expertise-bg-code">
+          <pre>
+            <span class="code-tag">&lt;html lang="en"&gt;</span>
+            <span class="code-tag">&lt;head&gt;</span>
+              <span class="code-attr">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span>
+              <span class="code-tag">&lt;title&gt;</span>What do I do<span class="code-tag">&lt;/title&gt;</span>
+            <span class="code-tag">&lt;/head&gt;</span>
+            <span class="code-tag">&lt;body&gt;</span>
+              <span class="code-tag">&lt;h1&gt;</span>Things I do to get a perfect background image<span class="code-tag">&lt;/h1&gt;</span>
+              <span class="code-tag">&lt;p&gt;</span>
+                Maybe I should stop tinkering with VSCode settings 
+                just to take a screenshot of this dummy html code.
+              <span class="code-tag">&lt;/p&gt;</span>
+              <span class="code-tag">&lt;span&gt;</span>
+                Oops, Almost forgot to say "Hello World!"!
+              <span class="code-tag">&lt;/span&gt;</span>
+            <span class="code-tag">&lt;/body&gt;</span>
+            <span class="code-tag">&lt;/html&gt;</span>
+          </pre>
+        </div>
+
+        <div class="expertise-columns">
+          <!-- Column 1 -->
+          <div class="exp-col">
+            <div class="exp-header">
+              <span class="exp-icon" [innerHTML]="icons.software | safeHtml"></span>
+              <h3><span class="hl-pink">Software</span><br>Development</h3>
+            </div>
+            <div class="exp-body">
+              <span class="code-comment">&lt;h3&gt;</span>
+              <p>Experienced in both functional and OOP: TypeScript, Java, JavaScript, Python, C#. Focus on scalable
+                solutions and clean code principles.</p>
+              <span class="code-comment">&lt;/h3&gt;</span>
+            </div>
+          </div>
+
+          <!-- Column 2 -->
+          <div class="exp-col">
+            <div class="exp-header">
+              <span class="exp-icon" [innerHTML]="icons.frontend | safeHtml"></span>
+              <h3><span class="hl-blue">Frontend Dev</span><br>React, NextJS</h3>
+            </div>
+            <div class="exp-body">
+              <span class="code-comment">&lt;h3&gt;</span>
+              <p>Passionate about UI/UX. Over 5 years of development experience in HTML, CSS, JS, React and NextJS
+                frameworks. Crafting seamless experiences.</p>
+              <span class="code-comment">&lt;/h3&gt;</span>
+            </div>
+          </div>
+
+          <!-- Column 3 -->
+          <div class="exp-col">
+            <div class="exp-header">
+              <span class="exp-icon" [innerHTML]="icons.mobile | safeHtml"></span>
+              <h3><span class="hl-orange">Mobile Dev</span><br>Android, iOS</h3>
+            </div>
+            <div class="exp-body">
+              <span class="code-comment">&lt;h3&gt;</span>
+              <p>Skilled in developing hybrid mobile apps and cross-platform solutions using Kotlin and Java. Creating
+                high-performance native-feeling apps.</p>
+              <span class="code-comment">&lt;/h3&gt;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ EXPERIENCE SECTION ══════════ -->
+  <section id="experience" class="background-section">
+    <div class="container">
+      <div class="section-label gsap-reveal">04 // Experience</div>
+      <h2 class="bg-title gsap-reveal bg-title--spaced">Professional Experience</h2>
+      <div class="experience-list gsap-reveal-stagger">
+        <div class="exp-row magnetic-wrap">
+          <div class="exp-role">Frontend Developer</div>
+          <div class="exp-line"></div>
+          <div class="exp-date">July 2025 – Present</div>
+        </div>
+        <div class="exp-row magnetic-wrap">
+          <div class="exp-role">Full-Stack Developer</div>
+          <div class="exp-line"></div>
+          <div class="exp-date">March – May 2025</div>
+        </div>
+        <div class="exp-row magnetic-wrap">
+          <div class="exp-role">Quality Assurance</div>
+          <div class="exp-line"></div>
+          <div class="exp-date">Jan – March 2025</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ WORK SECTION ══════════ -->
+  <section id="work" class="work-section">
+    <div class="container">
+
+      @if (projects().length > 0) {
+      <div class="work-top-layout">
+        <!-- Left Column: Huge Title & Description -->
+        <div class="work-top-left">
+          <h2 class="work-huge-title">My<br>Work</h2>
+          <p class="work-intro-desc">
+            Deployed scalable web and hybrid mobile apps using React, Angular, and native technologies.
+            Collaborated in multiple projects ranging from enterprise management systems to consumer mobile
+            applications.
+          </p>
+        </div>
+
+        <!-- Right Column: Featured Project Mockup & Call-To-Action -->
+        <div class="work-top-right">
+          <div class="featured-mockup">
+            <div class="featured-img-placeholder">
+              <i [innerHTML]="projects()[0].mockupEmoji | safeHtml"></i>
+            </div>
+          </div>
+          <div class="featured-arrow-content">
+            <!-- Curved purple arrow SVG pointing to the project title -->
+            <svg class="hand-drawn-arrow" width="80" height="80" viewBox="0 0 100 100" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 90 C 20 40, 60 20, 90 20" stroke="var(--accent)" stroke-width="4" fill="none"
+                stroke-linecap="round" />
+              <path d="M75 10 L 90 20 L 75 35" stroke="var(--accent)" stroke-width="4" fill="none" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <div class="featured-details">
+              <div class="featured-label">Featured Project</div>
+              <h3 class="featured-title">{{ projects()[0].title }}</h3>
+              <a href="#" class="btn btn-accent">View Project</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+
+      <!-- Project Filters -->
+      <div class="work-filters">
+        <span>Filter by</span>
+        <a href="javascript:void(0)" class="filter-active">All <sup>05</sup></a> /
+        <a href="javascript:void(0)">Web Apps <sup>03</sup></a> /
+        <a href="javascript:void(0)">Mobile <sup>02</sup></a>
+      </div>
+
+      <div class="work-grid">
+        @for (project of projects().slice(1); track project.num) {
+        <div class="work-card">
+          <div class="work-thumb">
+            <i [innerHTML]="project.mockupEmoji | safeHtml"></i>
+          </div>
+          <div class="work-info">
+            <h3 class="work-title">{{ project.title }}</h3>
+            <p class="featured-desc" style="font-size: 0.9rem;">{{ project.subtitle }}</p>
+            <div class="work-tags">
+              @for (tag of project.techNames; track tag) {
+              <span class="work-tag">{{ tag }}</span>
+              }
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ CONTACT SECTION ══════════ -->
   <section id="contact" class="contact-section">
-    <div class="container contact-inner">
-      <span class="contact-eyebrow">Let's connect</span>
-      <h2>Let's Work<br><span>Together.</span></h2>
-      <p>Looking for a dedicated IT student who delivers results? Let's build something great.</p>
-
-      <div class="hero-btns" style="justify-content:center">
-        <a href="mailto:deanbarquio@gmail.com" class="btn btn-primary">Send Email →</a>
-        <a href="tel:+639480008380" class="btn btn-outline">+63 948 000 8380</a>
-      </div>
-
-      <div class="contact-methods">
-        <div class="contact-chip">
-          <span class="chip-icon">📧</span>
-          <div>
-            <span class="chip-label">Email</span>
-            <span class="chip-val">deanbarquio&#64;gmail.com</span>
-          </div>
-        </div>
-        <div class="contact-chip">
-          <span class="chip-icon">📱</span>
-          <div>
-            <span class="chip-label">Phone</span>
-            <span class="chip-val">+63 948 000 8380</span>
-          </div>
-        </div>
-        <div class="contact-chip">
-          <span class="chip-icon">📍</span>
-          <div>
-            <span class="chip-label">Location</span>
-            <span class="chip-val">Consolacion, Cebu, PH</span>
-          </div>
-        </div>
-      </div>
+    <div class="contact-bg-text">HIRE ME</div>
+    <div class="container container-sm">
+      <div class="section-label">05 // Let's Connect</div>
+      <h2>Let's Make Something<br><span class="text-accent">Legendary.</span></h2>
+      <a href="mailto:deanbarquio@gmail.com" class="btn btn-accent"
+        style="padding: 1.2rem 3.5rem; font-size: 1.1rem;">Start a Conversation</a>
     </div>
   </section>
 
@@ -272,6 +373,6 @@
 
 <footer class="footer">
   <div class="container">
-    <p>&copy; 2026 <span>{{ name() }}</span>. Built with Angular 21.</p>
+    <p>&copy; 2026 DEAN BARQUIO. All rights reserved.</p>
   </div>
 </footer>
