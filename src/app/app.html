@@ -39,20 +39,7 @@
       <div class="split-inner">
         
         <div class="split-content left-content">
-          <h1 class="split-title">Designer</h1>
-          <p class="split-desc">Product designer specialising in UI design, crafting seamless and beautiful digital experiences.</p>
-        </div>
-
-        <!-- Designer Avatar Half -->
-        <div class="profile-half">
-          <div class="avatar-container">
-            <div class="avatar-head designer-head">
-              <div class="glasses"></div>
-            </div>
-            <div class="avatar-body designer-body">
-              <div class="shirt-collar"></div>
-            </div>
-          </div>
+          <h1 class="split-title">{{ name() }}</h1>
         </div>
 
       </div>
@@ -63,18 +50,8 @@
       <div class="split-inner">
         
         <div class="split-content right-content">
-          <h1 class="split-title">&lt;coder&gt;</h1>
-          <p class="split-desc">Front end developer writing clean, elegant and efficient code for scalable applications.</p>
-        </div>
-
-        <!-- Coder Avatar Half -->
-        <div class="profile-half">
-          <div class="avatar-container">
-            <div class="avatar-head coder-head"></div>
-            <div class="avatar-body coder-body">
-              <div class="hoodie-drawstrings"></div>
-            </div>
-          </div>
+          <h1 class="split-title">Frontend Developer</h1>
+          <p class="split-desc">Dedicated frontend dev — obsessed with UX details and clean, shipped UI.</p>
         </div>
 
       </div>
@@ -87,11 +64,33 @@
     </div>
   </section>
 
-  <!-- ══════════ Education / workshops / achievements — Van Holtz “next project” style ══════════ -->
+  <!-- ══════════ Education / workshops / achievements — full-bleed “next chapter” ══════════ -->
   <section id="background" class="edu-vh" #educationSection>
     <canvas #educationCanvas class="edu-vh__canvas" aria-hidden="true"></canvas>
 
     <div class="edu-vh__shell">
+      <div class="edu-vh__band">
+        <div class="edu-vh__band-grid" aria-hidden="true"></div>
+        <div class="edu-vh__band-inner">
+          <div class="edu-vh__band-left">
+            <p class="edu-vh__role-line">Software Engineer · Frontend Developer</p>
+            <p class="edu-vh__meta-line">
+              <span>{{ contact().location }}</span>
+              <span class="edu-vh__meta-sep">·</span>
+              <a class="edu-vh__meta-link" [href]="'tel:' + contact().phone">{{ contact().phone }}</a>
+              <span class="edu-vh__meta-sep">·</span>
+              <a class="edu-vh__meta-link" [href]="'mailto:' + contact().email">{{ contact().email }}</a>
+            </p>
+          </div>
+          <div class="edu-vh__band-right">
+            <a class="edu-vh__resume" [href]="resumePdfHref" download="Dean-Barquio-Resume.pdf">
+              <span class="edu-vh__resume-text">Résumé PDF</span>
+              <span class="edu-vh__resume-hint">same details as this site</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
       <div class="edu-vh__hero">
         <p class="edu-vh__next-label">next chapter</p>
         <div class="edu-vh__mega" aria-hidden="false">
@@ -169,6 +168,9 @@
       <div class="edu-vh__marquee" aria-hidden="true">
         <div class="edu-vh__marquee-track">
           <div class="edu-vh__marquee-chunk">
+            <span>Angular</span><span class="edu-vh__dot">·</span>
+            <span>Svelte</span><span class="edu-vh__dot">·</span>
+            <span>Tailwind CSS</span><span class="edu-vh__dot">·</span>
             <span>University of Cebu</span><span class="edu-vh__dot">·</span>
             <span>BS Information Technology</span><span class="edu-vh__dot">·</span>
             <span>Alliance Jumpstart</span><span class="edu-vh__dot">·</span>
@@ -176,6 +178,9 @@
             <span>PSITS</span><span class="edu-vh__dot">·</span>
           </div>
           <div class="edu-vh__marquee-chunk">
+            <span>Angular</span><span class="edu-vh__dot">·</span>
+            <span>Svelte</span><span class="edu-vh__dot">·</span>
+            <span>Tailwind CSS</span><span class="edu-vh__dot">·</span>
             <span>University of Cebu</span><span class="edu-vh__dot">·</span>
             <span>BS Information Technology</span><span class="edu-vh__dot">·</span>
             <span>Alliance Jumpstart</span><span class="edu-vh__dot">·</span>
@@ -189,7 +194,7 @@
 
   <!-- ══════════ EXPERTISE SECTION – Tamal Sen Replica ══════════ -->
   <section id="expertise" class="expertise-section">
-    <div class="container">
+    <div class="container container--full">
       <h2 class="expertise-title">My Expertise</h2>
 
       <div class="expertise-outer-box">
@@ -234,12 +239,12 @@
           <div class="exp-col">
             <div class="exp-header">
               <span class="exp-icon" [innerHTML]="icons.frontend | safeHtml"></span>
-              <h3><span class="hl-blue">Frontend Dev</span><br>React, NextJS</h3>
+              <h3><span class="hl-blue">Frontend</span><br>Angular, Svelte, Tailwind</h3>
             </div>
             <div class="exp-body">
               <span class="code-comment">&lt;h3&gt;</span>
-              <p>Passionate about UI/UX. Over 5 years of development experience in HTML, CSS, JS, React and NextJS
-                frameworks. Crafting seamless experiences.</p>
+              <p>Building production UIs with Angular and Svelte, styled with Tailwind CSS — component architecture,
+                signals/reactivity, and design tokens end to end.</p>
               <span class="code-comment">&lt;/h3&gt;</span>
             </div>
           </div>
@@ -264,26 +269,10 @@
 
   <!-- ══════════ EXPERIENCE SECTION ══════════ -->
   <section id="experience" class="background-section">
-    <div class="container">
-      <div class="section-label gsap-reveal">04 // Experience</div>
-      <h2 class="bg-title gsap-reveal bg-title--spaced">Professional Experience</h2>
-      <div class="experience-list gsap-reveal-stagger">
-        <div class="exp-row magnetic-wrap">
-          <div class="exp-role">Frontend Developer</div>
-          <div class="exp-line"></div>
-          <div class="exp-date">July 2025 – Present</div>
-        </div>
-        <div class="exp-row magnetic-wrap">
-          <div class="exp-role">Full-Stack Developer</div>
-          <div class="exp-line"></div>
-          <div class="exp-date">March – May 2025</div>
-        </div>
-        <div class="exp-row magnetic-wrap">
-          <div class="exp-role">Quality Assurance</div>
-          <div class="exp-line"></div>
-          <div class="exp-date">Jan – March 2025</div>
-        </div>
-      </div>
+    <div class="container container--full">
+      <div class="section-label">03 // Experience</div>
+      <h2 class="bg-title bg-title--spaced">Experience</h2>
+      <app-experience-section [items]="professionalExperiences()" />
     </div>
   </section>
 
@@ -297,9 +286,8 @@
         <div class="work-top-left">
           <h2 class="work-huge-title">My<br>Work</h2>
           <p class="work-intro-desc">
-            Deployed scalable web and hybrid mobile apps using React, Angular, and native technologies.
-            Collaborated in multiple projects ranging from enterprise management systems to consumer mobile
-            applications.
+            Shipped web and hybrid apps with Angular, React, and Svelte — from enterprise panels to org and booking
+            systems — with Tailwind-first styling where it fits the stack.
           </p>
         </div>
 

@@ -1,0 +1,59 @@
+<div class="exp-vh-band">
+  <div class="exp-vh-band__grid" aria-hidden="true"></div>
+
+  <div class="exp-vh-band__inner">
+    <div class="exp-stepper" #stepperRoot>
+      <div class="exp-stepper__line" aria-hidden="true"></div>
+
+      <div class="exp-stepper__steps">
+        @for (exp of items(); track exp.id) {
+        <section class="exp-stepper__step">
+          <div class="exp-stepper__marker" aria-hidden="true">
+            <div class="exp-dot">{{ exp.num }}</div>
+          </div>
+
+          <article class="exp-stepper__card">
+            <details class="exp-details">
+              <summary class="exp-details-summary">
+                <span class="exp-year">{{ exp.num }}</span>
+                <span class="exp-row-title">{{ exp.role }}</span>
+                <span class="exp-details-chevron" aria-hidden="true"></span>
+              </summary>
+
+              <div class="exp-details-body">
+                @if (exp.org) {
+                <span class="exp-pill exp-pill--org">{{ exp.org }}</span>
+                }
+                <span class="exp-pill exp-pill--date">{{ exp.date }}</span>
+
+                <p class="exp-summary">{{ exp.summary }}</p>
+
+                <div class="exp-highlights" aria-label="Highlights">
+                  @for (h of exp.highlights.slice(0, 3); track h) {
+                  <span class="exp-highlight-chip">{{ h }}</span>
+                  }
+                  @if (exp.highlights.length > 3) {
+                  <span class="exp-highlight-chip exp-highlight-chip--more">
+                    +{{ exp.highlights.length - 3 }} more
+                  </span>
+                  }
+                </div>
+
+                <div class="exp-tech" aria-label="Tech stack">
+                  @for (t of exp.tech; track t.label) {
+                  <span class="exp-tech-chip">
+                    <i class="exp-tech-chip__icon" [innerHTML]="t.icon | safeHtml"></i>
+                    <span class="exp-tech-chip__label">{{ t.label }}</span>
+                  </span>
+                  }
+                </div>
+              </div>
+            </details>
+          </article>
+        </section>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+

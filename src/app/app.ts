@@ -15,11 +15,12 @@ import * as THREE from 'three';
 gsap.registerPlugin(ScrollTrigger);
 import { ICONS } from './file-icons';
 import { SafeHtmlPipe } from './safe-html.pipe';
+import { ExperienceSectionComponent } from './experience-section/experience-section.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, SafeHtmlPipe],
+  imports: [CommonModule, SafeHtmlPipe, ExperienceSectionComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -35,13 +36,19 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   protected readonly contact = signal({
     email: 'deanbarquio@gmail.com',
     phone: '+639480008380',
-    location: 'Consolacion Cebu, Philippines'
+    location: 'Consolacion, Cebu, Philippines'
   });
+
+  /** Served from /public — matches Dean Lourence P. Barquio résumé PDF */
+  protected readonly resumePdfHref = '/resume-dean-barquio.pdf';
+
+  /** Primary frontend stack labels (Angular, Svelte, Tailwind CSS) */
+  protected readonly frontendStack = signal(['Angular', 'Svelte', 'Tailwind CSS']);
 
   /** College / university level only */
   protected readonly tertiaryEducation = signal([
     {
-      year: 'NOW',
+      year: '2021 – present',
       degree: 'BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY',
       school: 'University of Cebu – Banilad Campus'
     }
@@ -52,30 +59,92 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       year: '2024',
       title: 'Alliance Jumpstart Program',
       description:
-        'Practical software workshop providing industry-level project management and development experience.'
+        'Hands-on program for industry-level experience: real-world problems, project management, and high-quality outputs — with teamwork and leadership.'
     }
   ]);
 
-  protected readonly experiences = signal([
+  protected readonly professionalExperiences = signal<
     {
-      year: 'NOW',
-      role: 'Finance Volunteer',
-      org: 'Philippine Society of IT Students (PSITS)'
+      id: string;
+      num: string;
+      role: string;
+      org: string | null;
+      date: string;
+      summary: string;
+      highlights: string[];
+      tech: { label: string; icon: string }[];
+    }[]
+  >([
+    {
+      id: 'qa-intern',
+      num: '01',
+      role: 'Quality Assurance (Intern)',
+      org: null,
+      date: 'Jan – Mar 2025',
+      summary:
+        'Manual QA in Jira → user story validation → Selenium automation.',
+      highlights: [
+        'Manual testing (exploratory + regression).',
+        'Jira bug tickets + improvement requests.',
+        'User stories + acceptance criteria.',
+        'Selenium automation for repeat checks.'
+      ],
+      tech: [
+        { label: 'Jira', icon: ICONS.jira },
+        { label: 'Manual Testing', icon: ICONS.checkCircle },
+        { label: 'Bug Tickets', icon: ICONS.bug },
+        { label: 'User Stories', icon: ICONS.software },
+        { label: 'Acceptance Criteria', icon: ICONS.checkCircle },
+        { label: 'Selenium', icon: ICONS.selenium }
+      ]
     },
     {
-      year: '2024',
-      role: 'Treasurer',
-      org: 'Philippine Society of IT Students (PSITS)'
+      id: 'fullstack-control-panel',
+      num: '02',
+      role: 'Full-Stack Developer',
+      org: null,
+      date: 'Mar – May 2025',
+      summary:
+        'Built control panels end-to-end → extended HR inventory + manpower UX.',
+      highlights: [
+        'Next.js + Tailwind UI for feature management.',
+        'Prisma + TypeScript Node API + ElasticSearch.',
+        'Extended HR inventory & manpower handling.',
+        'Frontend + backend ownership.'
+      ],
+      tech: [
+        { label: 'Next.js', icon: ICONS.nextjs },
+        { label: 'Tailwind CSS', icon: ICONS.tailwind },
+        { label: 'Prisma', icon: ICONS.prisma },
+        { label: 'TypeScript', icon: ICONS.code },
+        { label: 'Node.js', icon: ICONS.node },
+        { label: 'ElasticSearch', icon: ICONS.elastic },
+        { label: 'Backend API', icon: ICONS.api }
+      ]
     },
     {
-      year: '2024',
-      role: 'Alliance Jumpstart Program',
-      org: 'Alliance Cebu Philippines'
-    },
-    {
-      year: '2023',
-      role: 'Second Year Representative',
-      org: 'Philippine Society of IT Students (PSITS)'
+      id: 'frontend-angular',
+      num: '03',
+      role: 'Software Engineer · Frontend Developer',
+      org: null,
+      date: 'July 2025 – Present',
+      summary:
+        'Angular 21+ UI with Lottie + libraries; Svelte support; realtime + file workflows.',
+      highlights: [
+        'Angular 21+ + Tailwind CSS (component architecture).',
+        'Lottie micro-interactions for UI feedback.',
+        'Component libraries + Svelte workflows.',
+        'Sockets + Filestack for realtime + file handling.'
+      ],
+      tech: [
+        { label: 'Angular 21+', icon: ICONS.triangle },
+        { label: 'Tailwind CSS', icon: ICONS.tailwind },
+        { label: 'Lottie', icon: ICONS.lottie },
+        { label: 'Component Libraries', icon: ICONS.software },
+        { label: 'Svelte', icon: ICONS.svelte },
+        { label: 'Sockets', icon: ICONS.sockets },
+        { label: 'Filestack', icon: ICONS.filestack }
+      ]
     }
   ]);
 
@@ -89,21 +158,23 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   ]);
 
   protected readonly techStack = signal([
-    { name: 'Java', icon: ICONS.coffee, size: 'xl' },
-    { name: 'React', icon: ICONS.frontend, size: 'xl' },
+    { name: 'Angular', icon: ICONS.triangle, size: 'xl' },
+    { name: 'Svelte', icon: ICONS.svelte, size: 'xl' },
+    { name: 'Tailwind', icon: ICONS.tailwind, size: 'xl' },
+    { name: 'TypeScript', icon: ICONS.code, size: 'lg', isText: true },
+    { name: 'React', icon: ICONS.frontend, size: 'lg' },
     { name: 'Node.js', icon: ICONS.node, size: 'lg' },
-    { name: 'JavaScript', icon: ICONS.code, size: 'lg', isText: true },
-    { name: 'Kotlin', icon: ICONS.target, size: 'lg' },
-    { name: 'Python', icon: ICONS.python, size: 'lg' },
+    { name: 'Java', icon: ICONS.coffee, size: 'lg' },
+    { name: 'JavaScript', icon: ICONS.code, size: 'md', isText: true },
+    { name: 'Kotlin', icon: ICONS.target, size: 'md' },
+    { name: 'Python', icon: ICONS.python, size: 'md' },
     { name: 'Firebase', icon: ICONS.flame, size: 'md' },
     { name: 'Docker', icon: ICONS.server, size: 'md' },
     { name: 'MySQL', icon: ICONS.database, size: 'md' },
-    { name: 'Angular', icon: ICONS.triangle, size: 'md' },
     { name: 'C#', icon: ICONS.code, size: 'md', isText: true },
     { name: 'GCP', icon: ICONS.cloud, size: 'md' },
     { name: 'GitHub', icon: ICONS.gitBranch, size: 'md' },
     { name: 'Android', icon: ICONS.smartphone, size: 'md' },
-    { name: 'TypeScript', icon: ICONS.code, size: 'sm', isText: true },
     { name: 'Figma', icon: ICONS.palette, size: 'sm' },
     { name: 'Postman', icon: ICONS.mail, size: 'sm' },
     { name: 'MongoDB', icon: ICONS.leaf, size: 'sm' },
@@ -168,7 +239,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   ]);
 
   protected readonly professionalSummary = signal(
-    'Motivated and resourceful Information Technology student with a strong interest in project management. Proficient in Java, Python, and JavaScript, with experience in React, Node.js, and Kotlin. Familiar with Firebase, GCP, MySQL and MongoDB. Skilled in Agile methodologies.'
+    'Software engineer and frontend developer focused on Angular and Svelte with Tailwind CSS — shipping typed, maintainable UIs. Strong in JavaScript/TypeScript ecosystems, Node.js, and mobile (Kotlin/Java), with Firebase, GCP, and SQL/NoSQL data layers. Agile delivery and QA-minded delivery.'
   );
 
   private disposeEducationScene?: () => void;
@@ -356,7 +427,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  /** Van Holtz–style scroll reveals for the education block */
+  /** Van Holtz–style scroll reveals, band chips, and scrubbed parallax on the education block */
   private initVhEducationMotion(): void {
     if (typeof window === 'undefined') return;
     const root = document.querySelector('.edu-vh');
@@ -366,9 +437,31 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       if (st) this.educationScrollTriggers.push(st);
     };
 
+    gsap.set('.edu-vh__band-left', { opacity: 0, y: 28 });
+    gsap.set('.edu-vh__stack-label', { opacity: 0, y: 12 });
+    gsap.set('.edu-vh__chip', { opacity: 0, y: 20, scale: 0.92 });
+    gsap.set('.edu-vh__resume', { opacity: 0, x: 28 });
     gsap.set('.edu-vh__next-label', { opacity: 0, y: 22 });
     gsap.set('.edu-vh__mega-line', { opacity: 0, y: 64 });
     gsap.set('.edu-vh__col', { opacity: 0, y: 40 });
+
+    const bandTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: root,
+        start: 'top 82%',
+        toggleActions: 'play none none none'
+      }
+    });
+    bandTl
+      .to('.edu-vh__band-left', { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out' })
+      .to('.edu-vh__stack-label', { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, '-=0.5')
+      .to(
+        '.edu-vh__chip',
+        { opacity: 1, y: 0, scale: 1, duration: 0.52, stagger: 0.09, ease: 'back.out(1.45)' },
+        '-=0.35'
+      )
+      .to('.edu-vh__resume', { opacity: 1, x: 0, duration: 0.65, ease: 'power3.out' }, '-=0.55');
+    track(bandTl.scrollTrigger);
 
     const heroTl = gsap.timeline({
       scrollTrigger: {
@@ -385,6 +478,18 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         '-=0.35'
       );
     track(heroTl.scrollTrigger);
+
+    const megaParallax = gsap.to('.edu-vh__mega', {
+      xPercent: -3.5,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: root,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1.15
+      }
+    });
+    track(megaParallax.scrollTrigger);
 
     const colTween = gsap.to('.edu-vh__col', {
       opacity: 1,
