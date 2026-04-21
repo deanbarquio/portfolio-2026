@@ -276,73 +276,69 @@
     </div>
   </section>
 
-  <!-- ══════════ WORK SECTION ══════════ -->
+  <!-- ══════════ WORK SECTION – Accordion Showcase ══════════ -->
   <section id="work" class="work-section">
-    <div class="container">
+    <div class="container container--full">
 
-      @if (projects().length > 0) {
-      <div class="work-top-layout">
-        <!-- Left Column: Huge Title & Description -->
-        <div class="work-top-left">
+      <div class="work-header-row">
+        <div class="work-header-left">
+          <div class="section-label">04 // Work</div>
           <h2 class="work-huge-title">My<br>Work</h2>
-          <p class="work-intro-desc">
-            Shipped web and hybrid apps with Angular, React, and Svelte — from enterprise panels to org and booking
-            systems — with Tailwind-first styling where it fits the stack.
-          </p>
         </div>
-
-        <!-- Right Column: Featured Project Mockup & Call-To-Action -->
-        <div class="work-top-right">
-          <div class="featured-mockup">
-            <div class="featured-img-placeholder">
-              <i [innerHTML]="projects()[0].mockupEmoji | safeHtml"></i>
-            </div>
-          </div>
-          <div class="featured-arrow-content">
-            <!-- Curved purple arrow SVG pointing to the project title -->
-            <svg class="hand-drawn-arrow" width="80" height="80" viewBox="0 0 100 100" fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 90 C 20 40, 60 20, 90 20" stroke="var(--accent)" stroke-width="4" fill="none"
-                stroke-linecap="round" />
-              <path d="M75 10 L 90 20 L 75 35" stroke="var(--accent)" stroke-width="4" fill="none" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
-            <div class="featured-details">
-              <div class="featured-label">Featured Project</div>
-              <h3 class="featured-title">{{ projects()[0].title }}</h3>
-              <a href="#" class="btn btn-accent">View Project</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      }
-
-      <!-- Project Filters -->
-      <div class="work-filters">
-        <span>Filter by</span>
-        <a href="javascript:void(0)" class="filter-active">All <sup>05</sup></a> /
-        <a href="javascript:void(0)">Web Apps <sup>03</sup></a> /
-        <a href="javascript:void(0)">Mobile <sup>02</sup></a>
+        <p class="work-intro-desc">
+          Shipped web and hybrid apps with Angular, React, and Svelte — from enterprise panels to org and booking
+          systems — with Tailwind-first styling where it fits the stack.
+        </p>
       </div>
 
-      <div class="work-grid">
-        @for (project of projects().slice(1); track project.num) {
-        <div class="work-card">
-          <div class="work-thumb">
-            <i [innerHTML]="project.mockupEmoji | safeHtml"></i>
-          </div>
-          <div class="work-info">
-            <h3 class="work-title">{{ project.title }}</h3>
-            <p class="featured-desc" style="font-size: 0.9rem;">{{ project.subtitle }}</p>
-            <div class="work-tags">
+      <div class="work-accordion">
+        @for (project of projects(); track project.num) {
+        <div class="work-acc-item" [class.work-acc-item--active]="activeProject() === project.num"
+          [attr.data-project]="project.num">
+          <button class="work-acc-header" type="button" (click)="toggleProject(project.num)">
+            <span class="work-acc-num">{{ project.num }}</span>
+            <div class="work-acc-title-group">
+              <h3 class="work-acc-name">{{ project.title }}</h3>
+              <span class="work-acc-subtitle">{{ project.subtitle }}</span>
+            </div>
+            <div class="work-acc-tags-row">
               @for (tag of project.techNames; track tag) {
-              <span class="work-tag">{{ tag }}</span>
+              <span class="work-acc-tag">{{ tag }}</span>
               }
+            </div>
+            <span class="work-acc-chevron" aria-hidden="true"></span>
+          </button>
+          <div class="work-acc-panel">
+            <div class="work-acc-panel-inner">
+              <div class="work-acc-detail-grid"
+                [class.work-acc-detail-grid--has-images]="project.images.length > 0">
+                <div class="work-acc-text-col">
+                  <p class="work-acc-desc">{{ project.description }}</p>
+                  <div class="work-acc-tech-row">
+                    @for (tag of project.techNames; track tag) {
+                    <span class="work-acc-tech-pill">{{ tag }}</span>
+                    }
+                  </div>
+                </div>
+                @if (project.images.length > 0) {
+                <div class="work-acc-gallery">
+                  @for (img of project.images; track img.src) {
+                  <div class="work-acc-img-frame"
+                    [class.work-acc-img-frame--web]="img.type === 'web'"
+                    [class.work-acc-img-frame--mobile]="img.type === 'mobile'">
+                    <img [src]="img.src" [alt]="img.alt" loading="lazy" />
+                    <span class="work-acc-img-caption">{{ img.label }}</span>
+                  </div>
+                  }
+                </div>
+                }
+              </div>
             </div>
           </div>
         </div>
         }
       </div>
+
     </div>
   </section>
 

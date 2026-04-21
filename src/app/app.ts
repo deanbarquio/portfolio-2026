@@ -31,6 +31,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
   protected readonly icons = ICONS;
   protected readonly theme = signal<'light' | 'dark'>('light');
+  protected readonly activeProject = signal<string | null>(null);
 
   protected readonly name = signal('DEAN LOURENCE P. BARQUIO');
   protected readonly contact = signal({
@@ -180,17 +181,26 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     { name: 'MongoDB', icon: ICONS.leaf, size: 'sm' },
   ]);
 
-  protected readonly projects = signal([
+  protected readonly projects = signal<{
+    num: string; title: string; subtitle: string; description: string;
+    tech: string[]; techNames: string[]; mockupEmoji: string;
+    mockupBg: string; alt: boolean;
+    images: { src: string; alt: string; label: string; type: string }[];
+  }[]>([
     {
       num: '01',
       title: 'CONSTRACK',
       subtitle: 'Project Management App',
-      description: "A comprehensive project management application for construction projects, focusing on employee handling, milestone tracking, task management, and manpower costing. Available on Android and Web.",
+      description: 'A comprehensive project management application for construction projects, focusing on employee handling, milestone tracking, task management, and manpower costing. Available on Android and Web.',
       tech: ['⚛️', '🟢', '🐍', '🎯', '🐳'],
       techNames: ['React', 'Node.js', 'Python', 'Kotlin', 'Docker'],
       mockupEmoji: ICONS.building,
       mockupBg: 'linear-gradient(135deg, #1a2818, #252e20)',
-      alt: false
+      alt: false,
+      images: [
+        { src: '/constrack-web.png', alt: 'Constrack Web Dashboard', label: 'Web Dashboard', type: 'web' },
+        { src: '/constrack-mobile.png', alt: 'Constrack Mobile App', label: 'Mobile App', type: 'mobile' }
+      ]
     },
     {
       num: '02',
@@ -201,7 +211,11 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       techNames: ['React', 'Node.js', 'MySQL', 'GCP'],
       mockupEmoji: ICONS.graduation,
       mockupBg: 'linear-gradient(135deg, #1a1e18, #22261e)',
-      alt: true
+      alt: true,
+      images: [
+        { src: '/psits_website.png', alt: 'PSITS Website Landing', label: 'Landing Page', type: 'web' },
+        { src: '/psits_website_2.png', alt: 'PSITS Website Management', label: 'Management View', type: 'web' }
+      ]
     },
     {
       num: '03',
@@ -212,7 +226,11 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       techNames: ['Angular', 'Node.js', 'MySQL', 'Firebase'],
       mockupEmoji: ICONS.tv,
       mockupBg: 'linear-gradient(135deg, #181c18, #202620)',
-      alt: false
+      alt: false,
+      images: [
+        { src: '/control_panel.png', alt: 'NTV360 Control Panel Interface', label: 'Control Panel', type: 'web' },
+        { src: '/control_panel_2.png', alt: 'NTV360 Features management', label: 'Feature Flags', type: 'web' }
+      ]
     },
     {
       num: '04',
@@ -223,7 +241,13 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       techNames: ['Kotlin', 'Java', 'Firebase', 'MySQL'],
       mockupEmoji: ICONS.home,
       mockupBg: 'linear-gradient(135deg, #1c2018, #252822)',
-      alt: true
+      alt: true,
+      images: [
+        { src: '/buildIt_mobile.png', alt: 'BuildIt Mobile App Home', label: 'Home', type: 'mobile' },
+        { src: '/buildIt_mobile_2.png', alt: 'BuildIt Mobile App Search', label: 'Search', type: 'mobile' },
+        { src: '/buildIt_mobile_3.png', alt: 'BuildIt Mobile App Profile', label: 'Profile', type: 'mobile' },
+        { src: '/buildIt_mobile_4.png', alt: 'BuildIt Mobile App History', label: 'History', type: 'mobile' }
+      ]
     },
     {
       num: '05',
@@ -234,7 +258,8 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       techNames: ['React', 'Node.js', 'MySQL'],
       mockupEmoji: ICONS.calendar,
       mockupBg: 'linear-gradient(135deg, #181c18, #22281e)',
-      alt: false
+      alt: false,
+      images: []
     }
   ]);
 
@@ -290,6 +315,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     this.initTimelineScroll();
     this.initEducationThree();
     this.initVhEducationMotion();
+    this.initWorkAccordion();
   }
 
   ngOnDestroy() {
@@ -643,6 +669,99 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         progress = Math.max(0, Math.min(1, progress));
 
         gsap.to(progressLine, { height: `${progress * 100}%`, duration: 0.3, ease: 'power1.out', overwrite: 'auto' });
+      });
+    });
+  }
+
+  toggleProject(num: string): void {
+    const current = this.activeProject();
+
+    if (current === num) {
+      this.activeProject.set(null);
+      const panel = document.querySelector(`[data-project="${num}"] .work-acc-panel`) as HTMLElement;
+      if (panel) {
+        gsap.to(panel, { height: 0, duration: 0.5, ease: 'power3.inOut', overwrite: true });
+        const inner = panel.querySelector('.work-acc-panel-inner');
+        if (inner) gsap.to(inner, { opacity: 0, y: -15, duration: 0.3, ease: 'power2.in', overwrite: true });
+      }
+    } else {
+      if (current) {
+        const prev = document.querySelector(`[data-project="${current}"] .work-acc-panel`) as HTMLElement;
+        if (prev) {
+          gsap.to(prev, { height: 0, duration: 0.4, ease: 'power3.inOut', overwrite: true });
+          const prevInner = prev.querySelector('.work-acc-panel-inner');
+          if (prevInner) gsap.to(prevInner, { opacity: 0, duration: 0.25, overwrite: true });
+        }
+      }
+      this.activeProject.set(num);
+      const panel = document.querySelector(`[data-project="${num}"] .work-acc-panel`) as HTMLElement;
+      if (panel) {
+        gsap.fromTo(panel, { height: 0 }, { height: 'auto', duration: 0.65, ease: 'power3.out', overwrite: true });
+        const inner = panel.querySelector('.work-acc-panel-inner');
+        if (inner) {
+          gsap.fromTo(inner, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.55, delay: 0.12, ease: 'power2.out', overwrite: true });
+        }
+        const frames = panel.querySelectorAll('.work-acc-img-frame');
+        if (frames.length) {
+          gsap.fromTo(frames,
+            { opacity: 0, y: 30, scale: 0.92 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.65, stagger: 0.15, delay: 0.25, ease: 'back.out(1.3)', overwrite: true }
+          );
+        }
+      }
+    }
+  }
+
+  private initWorkAccordion(): void {
+    if (typeof window === 'undefined') return;
+    gsap.set('.work-acc-panel', { height: 0, overflow: 'hidden' });
+
+    const items = document.querySelectorAll('.work-acc-item');
+    if (items.length) {
+      gsap.set(items, { opacity: 0, y: 50 });
+      gsap.to(items, {
+        opacity: 1, y: 0, duration: 0.85, stagger: 0.1, ease: 'power3.out',
+        scrollTrigger: { trigger: '.work-accordion', start: 'top 82%', toggleActions: 'play none none none' },
+        onComplete: () => {
+          // Only create auto-open triggers after the stagger reveal finishes
+          this.createAccordionScrollTriggers();
+        }
+      });
+    }
+
+    const header = document.querySelector('.work-header-row');
+    if (header) {
+      gsap.set(header, { opacity: 0, y: 40 });
+      gsap.to(header, {
+        opacity: 1, y: 0, duration: 1, ease: 'power4.out',
+        scrollTrigger: { trigger: '.work-section', start: 'top 80%', toggleActions: 'play none none none' }
+      });
+    }
+  }
+
+  private createAccordionScrollTriggers(): void {
+    this.projects().forEach((project) => {
+      const el = document.querySelector(`[data-project="${project.num}"]`);
+      if (!el) return;
+
+      ScrollTrigger.create({
+        trigger: el,
+        // Only fire when the header reaches the center of the viewport
+        start: 'top 45%',
+        end: 'bottom 45%',
+        onEnter: () => {
+          if (this.activeProject() !== project.num) {
+            this.toggleProject(project.num);
+            // Recalculate trigger positions after panel expand/collapse shifts layout
+            gsap.delayedCall(0.7, () => ScrollTrigger.refresh());
+          }
+        },
+        onEnterBack: () => {
+          if (this.activeProject() !== project.num) {
+            this.toggleProject(project.num);
+            gsap.delayedCall(0.7, () => ScrollTrigger.refresh());
+          }
+        }
       });
     });
   }

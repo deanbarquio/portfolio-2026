@@ -6,14 +6,15 @@
 
 .exp-stepper__line {
   position: absolute;
-  left: 42px;
-  top: 48px;
-  bottom: 18px;
+  left: calc(1.1rem + 43px);
+  top: 44px;
+  bottom: 44px;
   width: 2px;
   background: var(--edu-vh-rule);
   transform: scaleY(0);
   transform-origin: top center;
   opacity: 0.9;
+  z-index: 0;
 }
 
 .exp-vh-band {
@@ -58,7 +59,7 @@
 .exp-stepper__step {
   display: grid;
   grid-template-columns: 86px 1fr;
-  align-items: start;
+  align-items: center;
   gap: 1rem;
 }
 
@@ -84,7 +85,7 @@
   font-weight: 850;
   letter-spacing: 0.12em;
   font-size: 0.72rem;
-  background: color-mix(in srgb, var(--edu-vh-bg) 70%, transparent);
+  background: var(--edu-vh-bg);
 }
 
 .exp-stepper__card {
@@ -104,6 +105,7 @@
   max-width: 28rem;
   display: -webkit-box;
   -webkit-line-clamp: 1;
+  line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -323,8 +325,13 @@
   }
 
   .exp-stepper__line {
-    left: 35px;
+    left: calc(1.1rem + 36px);
   }
+}
+
+/* Base style update for transition */
+.exp-stepper__line {
+  transition: left 0.3s ease;
 }
 
 @media (max-width: 900px) {
