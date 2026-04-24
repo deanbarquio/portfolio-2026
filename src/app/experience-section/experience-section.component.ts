@@ -57,7 +57,7 @@ export class ExperienceSectionComponent implements AfterViewInit, OnDestroy {
 
     const root = this.stepperRoot.nativeElement;
     const line = root.querySelector<HTMLElement>('.exp-stepper__line');
-    const cards = Array.from(root.querySelectorAll<HTMLElement>('.exp-stepper__card'));
+    const cards = Array.from(root.querySelectorAll<HTMLElement>('.exp-card'));
 
     if (!line || cards.length === 0) return;
 

@@ -348,7 +348,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
     gsap.set('.edu-vh__band-left', { opacity: 0, y: 28 });
     gsap.set('.edu-vh__stack-label', { opacity: 0, y: 12 });
-    gsap.set('.edu-vh__chip', { opacity: 0, y: 20, scale: 0.92 });
+    gsap.set('.edu-vh__item', { opacity: 0, y: 20, scale: 0.96 });
     gsap.set('.edu-vh__resume', { opacity: 0, x: 28 });
     gsap.set('.edu-vh__next-label', { opacity: 0, y: 22 });
     gsap.set('.edu-vh__mega-line', { opacity: 0, y: 64 });
@@ -365,8 +365,8 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       .to('.edu-vh__band-left', { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out' })
       .to('.edu-vh__stack-label', { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, '-=0.5')
       .to(
-        '.edu-vh__chip',
-        { opacity: 1, y: 0, scale: 1, duration: 0.52, stagger: 0.09, ease: 'back.out(1.45)' },
+        '.edu-vh__item',
+        { opacity: 1, y: 0, scale: 1, duration: 0.65, stagger: 0.1, ease: 'power3.out' },
         '-=0.35'
       )
       .to('.edu-vh__resume', { opacity: 1, x: 0, duration: 0.65, ease: 'power3.out' }, '-=0.55');

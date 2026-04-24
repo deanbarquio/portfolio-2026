@@ -139,65 +139,62 @@
       </div>
 
       <div class="edu-vh__columns">
+        <!-- Tertiary Education -->
         <article class="edu-vh__col">
           <header class="edu-vh__col-head">
             <span class="edu-vh__idx">01</span>
             <h3 class="edu-vh__col-title">Tertiary education</h3>
           </header>
-          <div class="edu-vh__stack">
+          <div class="edu-vh__stack gsap-reveal-stagger">
             @for (edu of tertiaryEducation(); track edu.school) {
-            <details class="edu-vh__details" open>
-              <summary class="edu-vh__summary">
+            <div class="edu-vh__item tilt-card">
+              <div class="edu-vh__item-inner tilt-inner">
+                <div class="edu-vh__item-glare"></div>
                 <span class="edu-vh__year">{{ edu.year }}</span>
-                <span class="edu-vh__row-title">{{ edu.degree }}</span>
-                <span class="edu-vh__toggle-icon" aria-hidden="true"></span>
-              </summary>
-              <div class="edu-vh__body">
-                <p>{{ edu.school }}</p>
+                <h4 class="edu-vh__row-title">{{ edu.degree }}</h4>
+                <p class="edu-vh__body-text">{{ edu.school }}</p>
               </div>
-            </details>
+            </div>
             }
           </div>
         </article>
 
+        <!-- Workshops -->
         <article class="edu-vh__col">
           <header class="edu-vh__col-head">
             <span class="edu-vh__idx">02</span>
             <h3 class="edu-vh__col-title">Workshops</h3>
           </header>
-          <div class="edu-vh__stack">
+          <div class="edu-vh__stack gsap-reveal-stagger">
             @for (t of trainings(); track t.title) {
-            <details class="edu-vh__details" open>
-              <summary class="edu-vh__summary">
+            <div class="edu-vh__item tilt-card">
+              <div class="edu-vh__item-inner tilt-inner">
+                <div class="edu-vh__item-glare"></div>
                 <span class="edu-vh__year">{{ t.year }}</span>
-                <span class="edu-vh__row-title">{{ t.title }}</span>
-                <span class="edu-vh__toggle-icon" aria-hidden="true"></span>
-              </summary>
-              <div class="edu-vh__body">
-                <p>{{ t.description }}</p>
+                <h4 class="edu-vh__row-title">{{ t.title }}</h4>
+                <p class="edu-vh__body-text">{{ t.description }}</p>
               </div>
-            </details>
+            </div>
             }
           </div>
         </article>
 
+        <!-- Achievements -->
         <article class="edu-vh__col">
           <header class="edu-vh__col-head">
             <span class="edu-vh__idx">03</span>
             <h3 class="edu-vh__col-title">Achievements</h3>
           </header>
-          <div class="edu-vh__stack">
+          <div class="edu-vh__stack gsap-reveal-stagger">
             @for (ach of achievements(); track ach.title) {
-            <details class="edu-vh__details">
-              <summary class="edu-vh__summary">
+            <div class="edu-vh__item tilt-card">
+              <div class="edu-vh__item-inner tilt-inner">
+                <div class="edu-vh__item-glare"></div>
                 <span class="edu-vh__year">0{{ $index + 1 }}</span>
-                <span class="edu-vh__row-title">{{ ach.title }}</span>
-                <span class="edu-vh__toggle-icon" aria-hidden="true"></span>
-              </summary>
-              <div class="edu-vh__body">
-                <p>{{ ach.detail }}</p>
+                <h4 class="edu-vh__row-title">{{ ach.title }}</h4>
+                <p class="edu-vh__body-text">{{ ach.detail }}</p>
               </div>
-            </details>
+            </div>
             }
           </div>
         </article>
@@ -206,24 +203,24 @@
       <div class="edu-vh__marquee" aria-hidden="true">
         <div class="edu-vh__marquee-track">
           <div class="edu-vh__marquee-chunk">
-            <span>Angular</span><span class="edu-vh__dot">·</span>
-            <span>Svelte</span><span class="edu-vh__dot">·</span>
-            <span>Tailwind CSS</span><span class="edu-vh__dot">·</span>
-            <span>University of Cebu</span><span class="edu-vh__dot">·</span>
-            <span>BS Information Technology</span><span class="edu-vh__dot">·</span>
-            <span>Alliance Jumpstart</span><span class="edu-vh__dot">·</span>
-            <span>Magna Cum Laude</span><span class="edu-vh__dot">·</span>
-            <span>PSITS</span><span class="edu-vh__dot">·</span>
+            <span>Angular</span><span class="edu-vh__dot"></span>
+            <span>Svelte</span><span class="edu-vh__dot"></span>
+            <span>Tailwind CSS</span><span class="edu-vh__dot"></span>
+            <span>University of Cebu</span><span class="edu-vh__dot"></span>
+            <span>BS Information Technology</span><span class="edu-vh__dot"></span>
+            <span>Alliance Jumpstart</span><span class="edu-vh__dot"></span>
+            <span>Magna Cum Laude</span><span class="edu-vh__dot"></span>
+            <span>PSITS</span><span class="edu-vh__dot"></span>
           </div>
           <div class="edu-vh__marquee-chunk">
-            <span>Angular</span><span class="edu-vh__dot">·</span>
-            <span>Svelte</span><span class="edu-vh__dot">·</span>
-            <span>Tailwind CSS</span><span class="edu-vh__dot">·</span>
-            <span>University of Cebu</span><span class="edu-vh__dot">·</span>
-            <span>BS Information Technology</span><span class="edu-vh__dot">·</span>
-            <span>Alliance Jumpstart</span><span class="edu-vh__dot">·</span>
-            <span>Magna Cum Laude</span><span class="edu-vh__dot">·</span>
-            <span>PSITS</span><span class="edu-vh__dot">·</span>
+            <span>Angular</span><span class="edu-vh__dot"></span>
+            <span>Svelte</span><span class="edu-vh__dot"></span>
+            <span>Tailwind CSS</span><span class="edu-vh__dot"></span>
+            <span>University of Cebu</span><span class="edu-vh__dot"></span>
+            <span>BS Information Technology</span><span class="edu-vh__dot"></span>
+            <span>Alliance Jumpstart</span><span class="edu-vh__dot"></span>
+            <span>Magna Cum Laude</span><span class="edu-vh__dot"></span>
+            <span>PSITS</span><span class="edu-vh__dot"></span>
           </div>
         </div>
       </div>
