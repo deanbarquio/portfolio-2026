@@ -10,7 +10,6 @@ import {
 import { CommonModule } from '@angular/common';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import * as THREE from 'three';
 
 gsap.registerPlugin(ScrollTrigger);
 import { ICONS } from './file-icons';
@@ -26,11 +25,10 @@ import { ExperienceSectionComponent } from './experience-section/experience-sect
 })
 export class App implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('heroSection') heroSection!: ElementRef;
-  @ViewChild('educationCanvas') private educationCanvas?: ElementRef<HTMLCanvasElement>;
   @ViewChild('educationSection') private educationSection?: ElementRef<HTMLElement>;
 
   protected readonly icons = ICONS;
-  protected readonly theme = signal<'light' | 'dark'>('light');
+  protected readonly theme = signal<'light' | 'dark'>('dark');
   protected readonly activeProject = signal<string | null>(null);
 
   protected readonly name = signal('DEAN LOURENCE P. BARQUIO');
@@ -267,10 +265,12 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     'Software engineer and frontend developer focused on Angular and Svelte with Tailwind CSS — shipping typed, maintainable UIs. Strong in JavaScript/TypeScript ecosystems, Node.js, and mobile (Kotlin/Java), with Firebase, GCP, and SQL/NoSQL data layers. Agile delivery and QA-minded delivery.'
   );
 
-  private disposeEducationScene?: () => void;
-  private educationParticleMat?: THREE.PointsMaterial;
-  private educationWireMat?: THREE.MeshBasicMaterial;
   private educationScrollTriggers: ScrollTrigger[] = [];
+  private accordionScrollTriggers: ScrollTrigger[] = [];
+  private accordionRefreshCall?: gsap.core.Tween;
+  private lastManualAccordionToggleAt = 0;
+  private accordionIsAnimating = false;
+  private accordionScrollCooldownUntil = 0;
 
   private static readonly THEME_KEY = 'portfolio-theme';
 
@@ -287,7 +287,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     } catch {
       /* ignore */
     }
-    const t = stored === 'dark' || stored === 'light' ? stored : 'light';
+    const t = stored === 'dark' || stored === 'light' ? stored : 'dark';
     this.theme.set(t);
     el.setAttribute('data-theme', t);
   }
@@ -302,7 +302,6 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       /* ignore */
     }
     queueMicrotask(() => {
-      this.syncEducationThreeTheme();
       ScrollTrigger.refresh();
     });
   }
@@ -313,15 +312,16 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     this.initMagneticHover();
     this.init3DTiltHover();
     this.initTimelineScroll();
-    this.initEducationThree();
     this.initVhEducationMotion();
     this.initWorkAccordion();
   }
 
   ngOnDestroy() {
-    this.disposeEducationScene?.();
     this.educationScrollTriggers.forEach((t) => t.kill());
     this.educationScrollTriggers = [];
+    this.accordionScrollTriggers.forEach((t) => t.kill());
+    this.accordionScrollTriggers = [];
+    this.accordionRefreshCall?.kill();
   }
 
   private initParallax() {
@@ -334,123 +334,6 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
       // Cleaned old parallax elements, optionally add new parallax effects here
     });
-  }
-
-  /** Minimal Three.js: static buffers, GPU point rendering, resize + visibility + dispose. */
-  private initEducationThree() {
-    if (typeof window === 'undefined') return;
-
-    const canvas = this.educationCanvas?.nativeElement;
-    const section = this.educationSection?.nativeElement ?? canvas?.parentElement;
-    if (!canvas || !section) return;
-
-    const scene = new THREE.Scene();
-
-    const camera = new THREE.PerspectiveCamera(48, 1, 0.1, 100);
-    camera.position.z = 10;
-
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      alpha: true,
-      antialias: true,
-      powerPreference: 'high-performance'
-    });
-    renderer.setClearColor(0x000000, 0);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-    const n = 800;
-    const positions = new Float32Array(n * 3);
-    for (let i = 0; i < n * 3; i++) {
-      positions[i] = (Math.random() - 0.5) * 16;
-    }
-    const particleGeo = new THREE.BufferGeometry();
-    particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-    const particleMat = new THREE.PointsMaterial({
-      color: 0x000000,
-      size: 0.045,
-      transparent: true,
-      opacity: 0.08,
-      depthWrite: false,
-      sizeAttenuation: true
-    });
-    const particles = new THREE.Points(particleGeo, particleMat);
-    scene.add(particles);
-
-    const wireGeo = new THREE.TetrahedronGeometry(2.4, 0);
-    const wireMat = new THREE.MeshBasicMaterial({
-      color: 0x000000,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.05
-    });
-    const wireMesh = new THREE.Mesh(wireGeo, wireMat);
-    scene.add(wireMesh);
-
-    this.educationParticleMat = particleMat;
-    this.educationWireMat = wireMat;
-    this.syncEducationThreeTheme();
-
-    let visible = true;
-    const io = new IntersectionObserver(
-      (entries) => {
-        visible = entries[0]?.isIntersecting ?? true;
-      },
-      { threshold: 0, rootMargin: '100px' }
-    );
-    io.observe(section);
-
-    const resize = () => {
-      const w = section.clientWidth;
-      const h = section.clientHeight;
-      if (w < 1 || h < 1) return;
-      renderer.setSize(w, h, false);
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-    };
-
-    const ro = new ResizeObserver(resize);
-    ro.observe(section);
-
-    let raf = 0;
-    const tick = () => {
-      raf = requestAnimationFrame(tick);
-      if (!visible) return;
-      particles.rotation.y += 0.00035;
-      particles.rotation.x += 0.00012;
-      wireMesh.rotation.y -= 0.0005;
-      wireMesh.rotation.x += 0.00025;
-      renderer.render(scene, camera);
-    };
-
-    resize();
-    raf = requestAnimationFrame(tick);
-
-    this.disposeEducationScene = () => {
-      cancelAnimationFrame(raf);
-      ro.disconnect();
-      io.disconnect();
-      particleGeo.dispose();
-      particleMat.dispose();
-      wireGeo.dispose();
-      wireMat.dispose();
-      renderer.dispose();
-      this.educationParticleMat = undefined;
-      this.educationWireMat = undefined;
-    };
-  }
-
-  private syncEducationThreeTheme(): void {
-    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const hex = dark ? 0xffffff : 0x000000;
-    if (this.educationParticleMat) {
-      this.educationParticleMat.color.setHex(hex);
-      this.educationParticleMat.opacity = dark ? 0.09 : 0.07;
-    }
-    if (this.educationWireMat) {
-      this.educationWireMat.color.setHex(hex);
-      this.educationWireMat.opacity = dark ? 0.055 : 0.045;
-    }
   }
 
   /** Van Holtz–style scroll reveals, band chips, and scrubbed parallax on the education block */
@@ -673,43 +556,109 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  toggleProject(num: string): void {
+  toggleProject(num: string, source: 'manual' | 'scroll' = 'manual'): void {
+    if (source === 'manual') {
+      this.lastManualAccordionToggleAt = Date.now();
+    }
+
+    if (source === 'scroll') {
+      const now = Date.now();
+      if (this.accordionIsAnimating || now < this.accordionScrollCooldownUntil) return;
+    }
+
     const current = this.activeProject();
 
     if (current === num) {
       this.activeProject.set(null);
-      const panel = document.querySelector(`[data-project="${num}"] .work-acc-panel`) as HTMLElement;
-      if (panel) {
-        gsap.to(panel, { height: 0, duration: 0.5, ease: 'power3.inOut', overwrite: true });
-        const inner = panel.querySelector('.work-acc-panel-inner');
-        if (inner) gsap.to(inner, { opacity: 0, y: -15, duration: 0.3, ease: 'power2.in', overwrite: true });
-      }
+      this.closeAccordionPanel(num, 0.42);
+      this.queueAccordionRefresh(0.24);
     } else {
       if (current) {
-        const prev = document.querySelector(`[data-project="${current}"] .work-acc-panel`) as HTMLElement;
-        if (prev) {
-          gsap.to(prev, { height: 0, duration: 0.4, ease: 'power3.inOut', overwrite: true });
-          const prevInner = prev.querySelector('.work-acc-panel-inner');
-          if (prevInner) gsap.to(prevInner, { opacity: 0, duration: 0.25, overwrite: true });
-        }
+        this.closeAccordionPanel(current, 0.36);
       }
+
       this.activeProject.set(num);
-      const panel = document.querySelector(`[data-project="${num}"] .work-acc-panel`) as HTMLElement;
-      if (panel) {
-        gsap.fromTo(panel, { height: 0 }, { height: 'auto', duration: 0.65, ease: 'power3.out', overwrite: true });
-        const inner = panel.querySelector('.work-acc-panel-inner');
-        if (inner) {
-          gsap.fromTo(inner, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.55, delay: 0.12, ease: 'power2.out', overwrite: true });
-        }
-        const frames = panel.querySelectorAll('.work-acc-img-frame');
-        if (frames.length) {
-          gsap.fromTo(frames,
-            { opacity: 0, y: 30, scale: 0.92 },
-            { opacity: 1, y: 0, scale: 1, duration: 0.65, stagger: 0.15, delay: 0.25, ease: 'back.out(1.3)', overwrite: true }
-          );
+      this.openAccordionPanel(num);
+      if (source === 'scroll') {
+        this.accordionScrollCooldownUntil = Date.now() + 220;
+      }
+      this.queueAccordionRefresh(0.26);
+    }
+  }
+
+  private closeAccordionPanel(num: string, duration = 0.4): void {
+    const panel = document.querySelector(`[data-project="${num}"] .work-acc-panel`) as HTMLElement | null;
+    if (!panel) return;
+
+    const inner = panel.querySelector('.work-acc-panel-inner') as HTMLElement | null;
+    const frames = panel.querySelectorAll('.work-acc-img-frame');
+
+    gsap.killTweensOf(panel);
+    if (inner) gsap.killTweensOf(inner);
+    if (frames.length) gsap.killTweensOf(frames);
+
+    gsap.set(panel, { height: panel.scrollHeight });
+    gsap.to(panel, { height: 0, duration, ease: 'power2.inOut', overwrite: true });
+    if (inner) {
+      gsap.to(inner, { opacity: 0, y: -10, duration: Math.max(0.2, duration - 0.14), ease: 'power1.out', overwrite: true });
+    }
+  }
+
+  private openAccordionPanel(num: string): void {
+    const panel = document.querySelector(`[data-project="${num}"] .work-acc-panel`) as HTMLElement | null;
+    if (!panel) return;
+
+    const inner = panel.querySelector('.work-acc-panel-inner') as HTMLElement | null;
+    const frames = panel.querySelectorAll('.work-acc-img-frame');
+
+    gsap.killTweensOf(panel);
+    if (inner) gsap.killTweensOf(inner);
+    if (frames.length) gsap.killTweensOf(frames);
+
+    gsap.set(panel, { height: 'auto' });
+    const targetHeight = panel.scrollHeight;
+    this.accordionIsAnimating = true;
+
+    gsap.fromTo(
+      panel,
+      { height: 0 },
+      {
+        height: targetHeight,
+        duration: 0.56,
+        ease: 'power2.out',
+        overwrite: true,
+        onComplete: () => {
+          gsap.set(panel, { height: 'auto' });
+          this.accordionIsAnimating = false;
+        },
+        onInterrupt: () => {
+          this.accordionIsAnimating = false;
         }
       }
+    );
+
+    if (inner) {
+      gsap.fromTo(
+        inner,
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.42, delay: 0.08, ease: 'power2.out', overwrite: true }
+      );
     }
+
+    if (frames.length) {
+      gsap.fromTo(
+        frames,
+        { opacity: 0, y: 20, scale: 0.97 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.46, stagger: 0.08, delay: 0.14, ease: 'power2.out', overwrite: true }
+      );
+    }
+  }
+
+  private queueAccordionRefresh(delay = 0.24): void {
+    this.accordionRefreshCall?.kill();
+    this.accordionRefreshCall = gsap.delayedCall(delay, () => {
+      void ScrollTrigger.refresh();
+    });
   }
 
   private initWorkAccordion(): void {
@@ -740,29 +689,35 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private createAccordionScrollTriggers(): void {
+    this.accordionScrollTriggers.forEach((t) => t.kill());
+    this.accordionScrollTriggers = [];
+
     this.projects().forEach((project) => {
       const el = document.querySelector(`[data-project="${project.num}"]`);
       if (!el) return;
 
-      ScrollTrigger.create({
+      const st = ScrollTrigger.create({
         trigger: el,
-        // Only fire when the header reaches the center of the viewport
-        start: 'top 45%',
-        end: 'bottom 45%',
-        onEnter: () => {
+        start: 'top 52%',
+        end: 'bottom 42%',
+        refreshPriority: Number(project.num),
+        onEnter: (self) => {
+          if (Math.abs(self.getVelocity()) > 2000) return;
+          if (Date.now() - this.lastManualAccordionToggleAt < 900) return;
           if (this.activeProject() !== project.num) {
-            this.toggleProject(project.num);
-            // Recalculate trigger positions after panel expand/collapse shifts layout
-            gsap.delayedCall(0.7, () => ScrollTrigger.refresh());
+            this.toggleProject(project.num, 'scroll');
           }
         },
-        onEnterBack: () => {
+        onEnterBack: (self) => {
+          if (Math.abs(self.getVelocity()) > 2000) return;
+          if (Date.now() - this.lastManualAccordionToggleAt < 900) return;
           if (this.activeProject() !== project.num) {
-            this.toggleProject(project.num);
-            gsap.delayedCall(0.7, () => ScrollTrigger.refresh());
+            this.toggleProject(project.num, 'scroll');
           }
         }
       });
+
+      this.accordionScrollTriggers.push(st);
     });
   }
 
