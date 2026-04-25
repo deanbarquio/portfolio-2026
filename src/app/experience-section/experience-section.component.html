@@ -40,13 +40,8 @@
                 </div>
                 
                 <div class="exp-card__highlights">
-                  @for (h of exp.highlights.slice(0, 2); track h) {
+                  @for (h of exp.highlights; track h) {
                   <span class="exp-card__highlight-pill">{{ h }}</span>
-                  }
-                  @if (exp.highlights.length > 2) {
-                  <span class="exp-card__highlight-pill exp-card__highlight-pill--more">
-                    +{{ exp.highlights.length - 2 }}
-                  </span>
                   }
                 </div>
               </div>

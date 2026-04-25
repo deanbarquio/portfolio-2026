@@ -1,7 +1,9 @@
 <!-- ══════════ NAVBAR ══════════ -->
-<nav class="navbar">
+<nav class="navbar" [class.navbar--open]="isMobileMenuOpen()">
   <div class="nav-content">
-    <div class="logo">DEAN <span>.</span> BARQUIO</div>
+    <div class="logo" (click)="scrollTo('hero', $event)">DEAN <span>.</span> BARQUIO</div>
+
+    <!-- Desktop Links -->
     <ul class="nav-links">
       <li><a (click)="scrollTo('hero', $event)" href="#hero" class="nav-link"><i>01</i> // home</a></li>
       <li><a (click)="scrollTo('expertise', $event)" href="#expertise" class="nav-link"><i>02</i> // expertise</a></li>
@@ -10,11 +12,9 @@
       <li><a (click)="scrollTo('work', $event)" href="#work" class="nav-link"><i>04</i> // work</a></li>
       <li><a (click)="scrollTo('contact', $event)" href="#contact" class="nav-link"><i>05</i> // contact</a></li>
     </ul>
+
     <div class="nav-trailing">
-      <button
-        type="button"
-        class="theme-switch"
-        role="switch"
+      <button type="button" class="theme-switch" role="switch"
         [attr.aria-checked]="theme() === 'dark' ? 'true' : 'false'"
         [attr.aria-label]="theme() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'"
         (click)="toggleTheme()">
@@ -22,8 +22,36 @@
           <span class="theme-switch__knob"></span>
         </span>
       </button>
-      <div class="nav-cta">
+
+      <div class="nav-cta desktop-only">
         <a href="mailto:deanbarquio@gmail.com" class="btn btn-outline">Let's Talk</a>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+      <button class="menu-toggle" (click)="toggleMobileMenu()" [attr.aria-expanded]="isMobileMenuOpen()"
+        aria-label="Toggle navigation">
+        <span class="menu-toggle__box">
+          <span class="menu-toggle__inner"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu" [class.mobile-menu--open]="isMobileMenuOpen()">
+    <div class="mobile-menu__inner">
+      <ul class="mobile-nav-links">
+        <li><a (click)="scrollTo('hero', $event)" href="#hero" class="mobile-nav-link"><span>01</span> home</a></li>
+        <li><a (click)="scrollTo('expertise', $event)" href="#expertise" class="mobile-nav-link"><span>02</span>
+            expertise</a></li>
+        <li><a (click)="scrollTo('experience', $event)" href="#experience" class="mobile-nav-link"><span>03</span>
+            experience</a></li>
+        <li><a (click)="scrollTo('work', $event)" href="#work" class="mobile-nav-link"><span>04</span> work</a></li>
+        <li><a (click)="scrollTo('contact', $event)" href="#contact" class="mobile-nav-link"><span>05</span> contact</a>
+        </li>
+      </ul>
+      <div class="mobile-nav-footer">
+        <a href="mailto:deanbarquio@gmail.com" class="btn btn-accent">Let's Talk</a>
       </div>
     </div>
   </div>
@@ -39,28 +67,28 @@
     <div class="split-side designer-side">
       <div class="split-inner">
         <div class="split-content left-content">
-          <p class="hero-kicker">frontend engineer · cebu city</p>
+          <p class="hero-kicker">software engineer · frontend developer · cebu city</p>
           <h1 class="split-title">{{ name() }}</h1>
           <p class="split-desc">
-            I design precise interfaces and build production-ready frontend systems that feel fast, clear, and premium.
+            A dedicated developer with a passion for building innovative and user-friendly applications.
           </p>
 
-          <div class="hero-actions">
+          <!-- <div class="hero-actions">
             <a href="#work" (click)="scrollTo('work', $event)" class="btn btn-accent">View Work</a>
             <a [href]="resumePdfHref" download="Dean-Barquio-Resume.pdf" class="btn btn-outline">Download CV</a>
-          </div>
+          </div> -->
 
           <div class="hero-proof" aria-label="Delivery highlights">
-            <span>Fast delivery</span>
-            <span>Clean architecture</span>
-            <span>Production polish</span>
+            <span>Full-stack architecture</span>
+            <span>Agile & QA focused</span>
+            <span>Mobile & Web solutions</span>
           </div>
 
-          <ul class="hero-meta" aria-label="Quick profile details">
-            <li><span>Role</span><strong>Frontend Developer</strong></li>
+          <!-- <ul class="hero-meta" aria-label="Quick profile details">
+            <li><span>Role</span><strong>Software Engineer & Frontend Developer</strong></li>
             <li><span>Email</span><strong>{{ contact().email }}</strong></li>
             <li><span>Location</span><strong>{{ contact().location }}</strong></li>
-          </ul>
+          </ul> -->
         </div>
       </div>
     </div>
@@ -73,24 +101,30 @@
               <span></span><span></span><span></span>
             </div>
             <div class="hero-code-window__body">
-              <p><i>const</i> focus = [<b>'Angular'</b>, <b>'Svelte'</b>, <b>'Tailwind'</b>];</p>
+              <p><i>const</i> focus = [<b>'Next.js'</b>, <b>'Angular'</b>, <b>'Svelte'</b>, <b>'React'</b>];</p>
+              <p><i>const</i> backend = [<b>'Node.js'</b>, <b>'Kotlin'</b>, <b>'Java'</b>];</p>
+              <p><i>const</i> tools = [<b>'Firebase'</b>, <b>'GCP'</b>, <b>'Docker'</b>];</p>
+              <p><i>const</i> honors = <b>'Magna Cum Laude'</b>;</p>
               <p><i>const</i> style = <b>'clean architecture + sharp UX'</b>;</p>
-              <p><i>const</i> mission = <b>'ship memorable interfaces'</b>;</p>
             </div>
           </div>
 
           <div class="hero-stats">
             <article>
-              <strong>3+</strong>
+              <strong>4+</strong>
               <span>Years building UI</span>
             </article>
             <article>
-              <strong>20+</strong>
-              <span>Projects shipped</span>
+              <strong>5+</strong>
+              <span>Major projects</span>
             </article>
             <article>
-              <strong>100%</strong>
-              <span>Accessibility mindset</span>
+              <strong>Agile</strong>
+              <span>& QA focus</span>
+            </article>
+            <article>
+              <strong>Honors</strong>
+              <span>Outstanding IT Grad</span>
             </article>
           </div>
         </div>
@@ -345,8 +379,7 @@
           </button>
           <div class="work-acc-panel">
             <div class="work-acc-panel-inner">
-              <div class="work-acc-detail-grid"
-                [class.work-acc-detail-grid--has-images]="project.images.length > 0">
+              <div class="work-acc-detail-grid" [class.work-acc-detail-grid--has-images]="project.images.length > 0">
                 <div class="work-acc-text-col">
                   <p class="work-acc-desc">{{ project.description }}</p>
                   <div class="work-acc-tech-row">
@@ -358,8 +391,7 @@
                 @if (project.images.length > 0) {
                 <div class="work-acc-gallery">
                   @for (img of project.images; track img.src) {
-                  <div class="work-acc-img-frame"
-                    [class.work-acc-img-frame--web]="img.type === 'web'"
+                  <div class="work-acc-img-frame" [class.work-acc-img-frame--web]="img.type === 'web'"
                     [class.work-acc-img-frame--mobile]="img.type === 'mobile'">
                     <img [src]="img.src" [alt]="img.alt" loading="lazy" />
                     <span class="work-acc-img-caption">{{ img.label }}</span>

@@ -30,6 +30,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   protected readonly icons = ICONS;
   protected readonly theme = signal<'light' | 'dark'>('dark');
   protected readonly activeProject = signal<string | null>(null);
+  protected readonly isMobileMenuOpen = signal(false);
 
   protected readonly name = signal('DEAN LOURENCE P. BARQUIO');
   protected readonly contact = signal({
@@ -47,7 +48,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   /** College / university level only */
   protected readonly tertiaryEducation = signal([
     {
-      year: '2021 – present',
+      year: '2021 – 2025',
       degree: 'BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY',
       school: 'University of Cebu – Banilad Campus'
     }
@@ -75,26 +76,27 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     }[]
   >([
     {
-      id: 'qa-intern',
-      num: '01',
-      role: 'Quality Assurance (Intern)',
+      id: 'frontend-angular',
+      num: '03',
+      role: 'Software Engineer · Frontend Developer',
       org: null,
-      date: 'Jan – Mar 2025',
+      date: 'July 2025 – Present',
       summary:
-        'Manual QA in Jira → user story validation → Selenium automation.',
+        'Angular 21+ UI with Lottie + libraries; Svelte support; realtime + file workflows.',
       highlights: [
-        'Manual testing (exploratory + regression).',
-        'Jira bug tickets + improvement requests.',
-        'User stories + acceptance criteria.',
-        'Selenium automation for repeat checks.'
+        'Angular 21+ + Tailwind CSS (component architecture).',
+        'Lottie micro-interactions for UI feedback.',
+        'Component libraries + Svelte workflows.',
+        'Sockets + Filestack for realtime + file handling.'
       ],
       tech: [
-        { label: 'Jira', icon: ICONS.jira },
-        { label: 'Manual Testing', icon: ICONS.checkCircle },
-        { label: 'Bug Tickets', icon: ICONS.bug },
-        { label: 'User Stories', icon: ICONS.software },
-        { label: 'Acceptance Criteria', icon: ICONS.checkCircle },
-        { label: 'Selenium', icon: ICONS.selenium }
+        { label: 'Angular 21+', icon: ICONS.triangle },
+        { label: 'Tailwind CSS', icon: ICONS.tailwind },
+        { label: 'Lottie', icon: ICONS.lottie },
+        { label: 'Component Libraries', icon: ICONS.software },
+        { label: 'Svelte', icon: ICONS.svelte },
+        { label: 'Sockets', icon: ICONS.sockets },
+        { label: 'Filestack', icon: ICONS.filestack }
       ]
     },
     {
@@ -122,27 +124,26 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       ]
     },
     {
-      id: 'frontend-angular',
-      num: '03',
-      role: 'Software Engineer · Frontend Developer',
+      id: 'qa-intern',
+      num: '01',
+      role: 'Quality Assurance (Intern)',
       org: null,
-      date: 'July 2025 – Present',
+      date: 'Jan – Mar 2025',
       summary:
-        'Angular 21+ UI with Lottie + libraries; Svelte support; realtime + file workflows.',
+        'Manual QA in Jira → user story validation → Selenium automation.',
       highlights: [
-        'Angular 21+ + Tailwind CSS (component architecture).',
-        'Lottie micro-interactions for UI feedback.',
-        'Component libraries + Svelte workflows.',
-        'Sockets + Filestack for realtime + file handling.'
+        'Manual testing (exploratory + regression).',
+        'Jira bug tickets + improvement requests.',
+        'User stories + acceptance criteria.',
+        'Selenium automation for repeat checks.'
       ],
       tech: [
-        { label: 'Angular 21+', icon: ICONS.triangle },
-        { label: 'Tailwind CSS', icon: ICONS.tailwind },
-        { label: 'Lottie', icon: ICONS.lottie },
-        { label: 'Component Libraries', icon: ICONS.software },
-        { label: 'Svelte', icon: ICONS.svelte },
-        { label: 'Sockets', icon: ICONS.sockets },
-        { label: 'Filestack', icon: ICONS.filestack }
+        { label: 'Jira', icon: ICONS.jira },
+        { label: 'Manual Testing', icon: ICONS.checkCircle },
+        { label: 'Bug Tickets', icon: ICONS.bug },
+        { label: 'User Stories', icon: ICONS.software },
+        { label: 'Acceptance Criteria', icon: ICONS.checkCircle },
+        { label: 'Selenium', icon: ICONS.selenium }
       ]
     }
   ]);
@@ -150,9 +151,9 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   protected readonly achievements = signal<
     { title: string; detail: string }[]
   >([
-    { title: 'Magna Cum Laude', detail: 'Undergraduate graduation honors.' },
-    { title: 'Outstanding IT Graduate', detail: 'Program-level recognition.' },
-    { title: 'IT Excellence Awardee', detail: 'Department distinction.' },
+    { title: 'Magna Cum Laude', detail: 'Graduation honors.' },
+    { title: 'Outstanding IT Graduate', detail: 'University Department recognition.' },
+    { title: 'IT Excellence Awardee', detail: 'Department distinction of Excellence.' },
     { title: "Dean's Lister", detail: 'Consistent academic term honors.' }
   ]);
 
@@ -187,11 +188,35 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   }[]>([
     {
       num: '01',
+      title: 'COMPONENT PANTRY',
+      subtitle: 'Component Library',
+      description: 'An in-house component library deployed via Verdaccio, used across NTV360 projects. Installed via npm for consistent UI and rapid development.',
+      tech: ['🔺', '🎨'],
+      techNames: ['Angular', 'Tailwind CSS'],
+      mockupEmoji: ICONS.software,
+      mockupBg: 'linear-gradient(135deg, #182028, #1e2832)',
+      alt: false,
+      images: []
+    },
+    {
+      num: '02',
+      title: 'INVENTORY SYSTEM',
+      subtitle: 'HR Management Tool',
+      description: 'An internal tool built during my internship for the HR department to effectively track company inventory and manage employee records.',
+      tech: ['⚛️', '📘', '🗄️'],
+      techNames: ['Next.js', 'TypeScript', 'Prisma'],
+      mockupEmoji: ICONS.database,
+      mockupBg: 'linear-gradient(135deg, #181c28, #222632)',
+      alt: true,
+      images: []
+    },
+    {
+      num: '03',
       title: 'CONSTRACK',
       subtitle: 'Project Management App',
       description: 'A comprehensive project management application for construction projects, focusing on employee handling, milestone tracking, task management, and manpower costing. Available on Android and Web.',
-      tech: ['⚛️', '🟢', '🐍', '🎯', '🐳'],
-      techNames: ['React', 'Node.js', 'Python', 'Kotlin', 'Docker'],
+      tech: ['⚛️', '🟢', '🐍', '🎯', '🐳', '🧠'],
+      techNames: ['React', 'Node.js', 'Python', 'Kotlin', 'Docker', 'Integrated Role Based Intelligence'],
       mockupEmoji: ICONS.building,
       mockupBg: 'linear-gradient(135deg, #1a2818, #252e20)',
       alt: false,
@@ -201,7 +226,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       ]
     },
     {
-      num: '02',
+      num: '04',
       title: 'PSITS WEBSITE',
       subtitle: 'Organization Management',
       description: 'Automating student organization workflow including Membership management and Merchandise payments for the Philippine Society of Information Technology Students.',
@@ -216,7 +241,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       ]
     },
     {
-      num: '03',
+      num: '05',
       title: 'NTV360 CONTROL PANEL',
       subtitle: 'Feature Management Panel',
       description: 'A control panel tool for N-Compass TV that manages and controls the features of their enterprise applications, streamlining feature flag management and system configuration.',
@@ -231,7 +256,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       ]
     },
     {
-      num: '04',
+      num: '06',
       title: 'BUILDIT',
       subtitle: 'Mobile Application',
       description: 'A mobile application connecting construction workers with clients in the community. Users can find skilled workers for projects, and independent contractors can streamline their service offerings.',
@@ -248,7 +273,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       ]
     },
     {
-      num: '05',
+      num: '07',
       title: 'BOOKING MANAGEMENT',
       subtitle: 'Reservation System',
       description: 'A non-commercial booking system tailored for enterprise use, streamlining business rules for room reservations and scheduling with Alliance Jumpstart Program.',
@@ -262,7 +287,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   ]);
 
   protected readonly professionalSummary = signal(
-    'Software engineer and frontend developer focused on Angular and Svelte with Tailwind CSS — shipping typed, maintainable UIs. Strong in JavaScript/TypeScript ecosystems, Node.js, and mobile (Kotlin/Java), with Firebase, GCP, and SQL/NoSQL data layers. Agile delivery and QA-minded delivery.'
+    'Software Engineer & Frontend Developer with a strong background in Information Technology. Proficient in programming languages including Java, Python, and JavaScript, with experience developing responsive web and mobile applications using frameworks such as React, Node.js, and Kotlin. Familiar with cloud platforms like Firebase and Google Cloud, with hands-on experience in database systems like MySQL and MongoDB. Skilled in applying Agile methodologies to projects, collaborating effectively in team environments, and quickly adapting to new technologies. Dedicated to leveraging IT solutions to solve real-world problems and committed to continuously improving technical skills, particularly in quality assurance for every project.'
   );
 
   private educationScrollTriggers: ScrollTrigger[] = [];
@@ -306,8 +331,12 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  toggleMobileMenu(): void {
+    this.isMobileMenuOpen.update(v => !v);
+  }
+
   ngAfterViewInit() {
-    this.initParallax();
+    // this.initParallax(); // Remove hero sliding parallax
     this.initScrollAnimations();
     this.initMagneticHover();
     this.init3DTiltHover();
@@ -422,8 +451,8 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
           const el = entry.target as HTMLElement;
 
           if (el.classList.contains('gsap-reveal')) {
-            gsap.fromTo(el, 
-              { y: 60, opacity: 0 }, 
+            gsap.fromTo(el,
+              { y: 60, opacity: 0 },
               { y: 0, opacity: 1, duration: 1.2, ease: 'power4.out', overwrite: 'auto' }
             );
           } else if (el.classList.contains('gsap-reveal-stagger')) {
@@ -456,7 +485,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
   private initMagneticHover() {
     if (typeof document === 'undefined') return;
-    
+
     const magneticElements = document.querySelectorAll('.magnetic-wrap');
 
     magneticElements.forEach((el: any) => {
@@ -536,7 +565,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
     window.addEventListener('scroll', () => {
       const groups = document.querySelectorAll('.timeline-group');
-      
+
       groups.forEach((group: any) => {
         const progressLine = group.querySelector('.timeline-line-progress');
         if (!progressLine) return;
@@ -545,7 +574,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         const windowHeight = window.innerHeight;
 
         // Start line drawing when the container is partially visible in viewport
-        const scrollPos = windowHeight - rect.top - (windowHeight * 0.2); 
+        const scrollPos = windowHeight - rect.top - (windowHeight * 0.2);
         const totalHeight = rect.height;
 
         let progress = scrollPos / totalHeight;
@@ -723,6 +752,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
   scrollTo(sectionId: string, event: Event) {
     event.preventDefault();
+    this.isMobileMenuOpen.set(false); // Close menu if open
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
