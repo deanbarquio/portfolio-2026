@@ -24,12 +24,12 @@
       </button>
 
       <div class="nav-cta desktop-only">
-        <a href="mailto:deanbarquio@gmail.com" class="btn btn-outline">Let's Talk</a>
+        <button type="button" (click)="openGmailCompose($event)" class="btn btn-outline">Let's Talk</button>
       </div>
 
       <!-- Mobile Menu Toggle -->
-      <button class="menu-toggle" (click)="toggleMobileMenu()" [attr.aria-expanded]="isMobileMenuOpen()"
-        aria-label="Toggle navigation">
+      <button type="button" class="menu-toggle" (click)="toggleMobileMenu()" [attr.aria-expanded]="isMobileMenuOpen()"
+        aria-controls="mobile-navigation" [attr.aria-label]="isMobileMenuOpen() ? 'Close navigation' : 'Open navigation'">
         <span class="menu-toggle__box">
           <span class="menu-toggle__inner"></span>
         </span>
@@ -37,25 +37,27 @@
     </div>
   </div>
 
-  <!-- Mobile Menu Overlay -->
-  <div class="mobile-menu" [class.mobile-menu--open]="isMobileMenuOpen()">
-    <div class="mobile-menu__inner">
-      <ul class="mobile-nav-links">
-        <li><a (click)="scrollTo('hero', $event)" href="#hero" class="mobile-nav-link"><span>01</span> home</a></li>
-        <li><a (click)="scrollTo('expertise', $event)" href="#expertise" class="mobile-nav-link"><span>02</span>
-            expertise</a></li>
-        <li><a (click)="scrollTo('experience', $event)" href="#experience" class="mobile-nav-link"><span>03</span>
-            experience</a></li>
-        <li><a (click)="scrollTo('work', $event)" href="#work" class="mobile-nav-link"><span>04</span> work</a></li>
-        <li><a (click)="scrollTo('contact', $event)" href="#contact" class="mobile-nav-link"><span>05</span> contact</a>
-        </li>
-      </ul>
-      <div class="mobile-nav-footer">
-        <a href="mailto:deanbarquio@gmail.com" class="btn btn-accent">Let's Talk</a>
-      </div>
+</nav>
+
+<!-- Mobile Menu Overlay -->
+<div id="mobile-navigation" class="mobile-menu" [class.mobile-menu--open]="isMobileMenuOpen()"
+  (click)="onMobileMenuBackdropClick($event)">
+  <div class="mobile-menu__inner">
+    <ul class="mobile-nav-links">
+      <li><a (click)="scrollTo('hero', $event)" href="#hero" class="mobile-nav-link"><span>01</span> home</a></li>
+      <li><a (click)="scrollTo('expertise', $event)" href="#expertise" class="mobile-nav-link"><span>02</span>
+          expertise</a></li>
+      <li><a (click)="scrollTo('experience', $event)" href="#experience" class="mobile-nav-link"><span>03</span>
+          experience</a></li>
+      <li><a (click)="scrollTo('work', $event)" href="#work" class="mobile-nav-link"><span>04</span> work</a></li>
+      <li><a (click)="scrollTo('contact', $event)" href="#contact" class="mobile-nav-link"><span>05</span> contact</a>
+      </li>
+    </ul>
+    <div class="mobile-nav-footer">
+      <button type="button" (click)="openGmailCompose($event)" class="btn btn-accent">Let's Talk</button>
     </div>
   </div>
-</nav>
+</div>
 
 <main>
 
@@ -415,8 +417,8 @@
     <div class="container container-sm">
       <div class="section-label">05 // Let's Connect</div>
       <h2>Let's Make Something<br><span class="text-accent">Legendary.</span></h2>
-      <a href="mailto:deanbarquio@gmail.com" class="btn btn-accent"
-        style="padding: 1.2rem 3.5rem; font-size: 1.1rem;">Start a Conversation</a>
+      <button type="button" (click)="openGmailCompose($event)" class="btn btn-accent"
+        style="padding: 1.2rem 3.5rem; font-size: 1.1rem;">Start a Conversation</button>
     </div>
   </section>
 

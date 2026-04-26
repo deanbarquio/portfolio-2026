@@ -5,7 +5,8 @@ import {
   ViewChild,
   AfterViewInit,
   OnDestroy,
-  OnInit
+  OnInit,
+  HostListener
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { gsap } from 'gsap';
@@ -332,7 +333,31 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   }
 
   toggleMobileMenu(): void {
-    this.isMobileMenuOpen.update(v => !v);
+    this.setMobileMenuState(!this.isMobileMenuOpen());
+  }
+
+  closeMobileMenu(): void {
+    this.setMobileMenuState(false);
+  }
+
+  onMobileMenuBackdropClick(event: MouseEvent): void {
+    if (event.target === event.currentTarget) {
+      this.closeMobileMenu();
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscapePressed(): void {
+    if (this.isMobileMenuOpen()) {
+      this.closeMobileMenu();
+    }
+  }
+
+  @HostListener('window:resize')
+  onWindowResize(): void {
+    if (window.innerWidth > 860 && this.isMobileMenuOpen()) {
+      this.closeMobileMenu();
+    }
   }
 
   ngAfterViewInit() {
@@ -346,6 +371,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.unlockPageScroll();
     this.educationScrollTriggers.forEach((t) => t.kill());
     this.educationScrollTriggers = [];
     this.accordionScrollTriggers.forEach((t) => t.kill());
@@ -363,6 +389,19 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
       // Cleaned old parallax elements, optionally add new parallax effects here
     });
+  }
+
+  private setMobileMenuState(isOpen: boolean): void {
+    this.isMobileMenuOpen.set(isOpen);
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      return;
+    }
+    this.unlockPageScroll();
+  }
+
+  private unlockPageScroll(): void {
+    document.body.style.overflow = '';
   }
 
   /** Van Holtz–style scroll reveals, band chips, and scrubbed parallax on the education block */
@@ -752,10 +791,28 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
   scrollTo(sectionId: string, event: Event) {
     event.preventDefault();
-    this.isMobileMenuOpen.set(false); // Close menu if open
+    this.closeMobileMenu(); // Close menu if open
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  openGmailCompose(event?: Event): void {
+    event?.preventDefault();
+    this.closeMobileMenu();
+
+    const gmailUrl = new URL('https://mail.google.com/mail/');
+    gmailUrl.searchParams.set('view', 'cm');
+    gmailUrl.searchParams.set('fs', '1');
+    gmailUrl.searchParams.set('to', 'deanbarquio@gmail.com');
+    gmailUrl.searchParams.set('su', 'Portfolio inquiry');
+    gmailUrl.searchParams.set('body', "Hi Dean, I'd like to connect regarding your portfolio.");
+    const gmailComposeUrl = gmailUrl.toString();
+
+    const win = window.open(gmailComposeUrl, '_blank', 'noopener,noreferrer');
+    if (!win) {
+      window.location.assign(gmailComposeUrl);
     }
   }
 }
