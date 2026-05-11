@@ -57,6 +57,12 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
   protected readonly trainings = signal([
     {
+      year: '2025',
+      title: 'DevFest Cebu 2025',
+      description:
+        'Theme: “Building Safe, Secure, and Scalable Solutions with AI and Cloud.” GDG community conference with Google Developer Experts and industry leaders — talks, workshops, and networking for practical skills and the latest in AI and cloud. Golden Peak Hotel & Suites, Mandaue.'
+    },
+    {
       year: '2024',
       title: 'Alliance Jumpstart Program',
       description:
@@ -283,7 +289,12 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       mockupEmoji: ICONS.calendar,
       mockupBg: 'linear-gradient(135deg, #181c18, #22281e)',
       alt: false,
-      images: []
+      images: [
+        { src: '/meeting_room1.png', alt: 'Booking Management — My Bookings and room tables', label: 'My Bookings', type: 'web' },
+        { src: '/meeting_room2.png', alt: 'Booking Management — calendar and pending cancellations', label: 'Calendar', type: 'web' },
+        { src: '/meeting_room3.png', alt: 'Booking Management — room style and availability', label: 'Room setup', type: 'web' },
+        { src: '/meeting_room4.png', alt: 'Booking Management — new booking and scheduling', label: 'New booking', type: 'web' }
+      ]
     }
   ]);
 
