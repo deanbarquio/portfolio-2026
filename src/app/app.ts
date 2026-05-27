@@ -43,10 +43,10 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   /** Served from /public — matches Dean Lourence P. Barquio résumé PDF */
   protected readonly resumePdfHref = '/resume-dean-barquio.pdf';
 
-  /** Primary frontend stack labels (Angular, Svelte, Tailwind CSS) */
+  /** Primary frontend stack labels displayed in the designer-side hero section */
   protected readonly frontendStack = signal(['Angular', 'Svelte', 'Tailwind CSS']);
 
-  /** College / university level only */
+  /** Tertiary education level academic credentials and achievements */
   protected readonly tertiaryEducation = signal([
     {
       year: '2021 – 2025',
@@ -55,6 +55,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     }
   ]);
 
+  /** Professional industry workshops, trainings, and developer conference participations */
   protected readonly trainings = signal([
     {
       year: '2025',
@@ -70,6 +71,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     }
   ]);
 
+  /** List of professional roles, internships, and engineering experiences */
   protected readonly professionalExperiences = signal<
     {
       id: string;
@@ -85,76 +87,74 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     {
       id: 'frontend-angular',
       num: '03',
-      role: 'Software Engineer · Frontend Developer',
-      org: null,
-      date: 'July 2025 – Present',
+      role: 'Software Engineer / Frontend Developer',
+      org: 'Cebu City, Cebu',
+      date: 'June 2025 – Present',
       summary:
-        'Angular 21+ UI with Lottie + libraries; Svelte support; realtime + file workflows.',
+        'Developed and delivered robust, scalable frontend architectures utilizing Angular, Svelte, and TailwindCSS alongside complex Auth0 integrations and real-time Socket communication.',
       highlights: [
-        'Angular 21+ + Tailwind CSS (component architecture).',
-        'Lottie micro-interactions for UI feedback.',
-        'Component libraries + Svelte workflows.',
-        'Sockets + Filestack for realtime + file handling.'
+        'Developed frontend applications using Angular and Svelte with Auth0, Sockets, Filestack, and TailwindCSS for scalable UI delivery.',
+        'Built an internal component pantry using Angular, Verdaccio, and TailwindCSS, enabling reusable npm-installed components and faster development.',
+        'Led UI standards and reusable component design to improve consistency and scalability.',
+        'Mentored interns through technical guidance and training on industry best practices.'
       ],
       tech: [
         { label: 'Angular 21+', icon: ICONS.triangle },
-        { label: 'Tailwind CSS', icon: ICONS.tailwind },
-        { label: 'Lottie', icon: ICONS.lottie },
-        { label: 'Component Libraries', icon: ICONS.software },
         { label: 'Svelte', icon: ICONS.svelte },
+        { label: 'Tailwind CSS', icon: ICONS.tailwind },
+        { label: 'Auth0', icon: ICONS.checkCircle },
         { label: 'Sockets', icon: ICONS.sockets },
-        { label: 'Filestack', icon: ICONS.filestack }
+        { label: 'Filestack', icon: ICONS.filestack },
+        { label: 'Verdaccio', icon: ICONS.software }
       ]
     },
     {
       id: 'fullstack-control-panel',
       num: '02',
-      role: 'Full-Stack Developer',
-      org: null,
-      date: 'Mar – May 2025',
+      role: 'Full-Stack Developer Intern',
+      org: 'Cebu City, Cebu',
+      date: 'March 2025 – May 2025',
       summary:
-        'Built control panels end-to-end → extended HR inventory + manpower UX.',
+        'Served as sole developer building high-impact management systems, feature toggles, and company dashboards with Next.js, NestJS, Elasticsearch, and Docker.',
       highlights: [
-        'Next.js + Tailwind UI for feature management.',
-        'Prisma + TypeScript Node API + ElasticSearch.',
-        'Extended HR inventory & manpower handling.',
-        'Frontend + backend ownership.'
+        'Developed an internal Control Panel and Company Dashboard as sole developer using Next.js, TypeScript, TanStack Query, Elasticsearch/OpenSearch, and Docker.',
+        'Built dashboard features to streamline internal operations and improve data access.',
+        'Implemented scalable architecture to enhance performance and maintainability.'
       ],
       tech: [
         { label: 'Next.js', icon: ICONS.nextjs },
-        { label: 'Tailwind CSS', icon: ICONS.tailwind },
-        { label: 'Prisma', icon: ICONS.prisma },
         { label: 'TypeScript', icon: ICONS.code },
-        { label: 'Node.js', icon: ICONS.node },
-        { label: 'ElasticSearch', icon: ICONS.elastic },
-        { label: 'Backend API', icon: ICONS.api }
+        { label: 'TanStack Query', icon: ICONS.api },
+        { label: 'Elasticsearch', icon: ICONS.elastic },
+        { label: 'Docker', icon: ICONS.server },
+        { label: 'Prisma', icon: ICONS.prisma },
+        { label: 'Node.js', icon: ICONS.node }
       ]
     },
     {
       id: 'qa-intern',
       num: '01',
-      role: 'Quality Assurance (Intern)',
-      org: null,
-      date: 'Jan – Mar 2025',
+      role: 'Quality Assurance Intern',
+      org: 'Cebu City, Cebu',
+      date: 'January 2025 – March 2025',
       summary:
-        'Manual QA in Jira → user story validation → Selenium automation.',
+        'Conducted comprehensive manual, UAT, and regression testing cycles while spearheading automation using Selenium scripts to ensure high code quality.',
       highlights: [
-        'Manual testing (exploratory + regression).',
-        'Jira bug tickets + improvement requests.',
-        'User stories + acceptance criteria.',
-        'Selenium automation for repeat checks.'
+        'Executed manual testing and UAT to identify bugs and validate functionality.',
+        'Reported defects with clear reproduction steps and network checks.',
+        'Automated tests using Selenium to improve testing efficiency.'
       ],
       tech: [
-        { label: 'Jira', icon: ICONS.jira },
         { label: 'Manual Testing', icon: ICONS.checkCircle },
-        { label: 'Bug Tickets', icon: ICONS.bug },
-        { label: 'User Stories', icon: ICONS.software },
-        { label: 'Acceptance Criteria', icon: ICONS.checkCircle },
-        { label: 'Selenium', icon: ICONS.selenium }
+        { label: 'Selenium', icon: ICONS.selenium },
+        { label: 'Jira', icon: ICONS.jira },
+        { label: 'Bug Reporting', icon: ICONS.bug },
+        { label: 'UAT', icon: ICONS.software }
       ]
     }
   ]);
 
+  /** Major academic awards, honors, and recognitions received */
   protected readonly achievements = signal<
     { title: string; detail: string }[]
   >([
@@ -164,29 +164,34 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     { title: "Dean's Lister", detail: 'Consistent academic term honors.' }
   ]);
 
+  /** High-fidelity comprehensive skills matrix categorized from the developer resume */
   protected readonly techStack = signal([
     { name: 'Angular', icon: ICONS.triangle, size: 'xl' },
     { name: 'Svelte', icon: ICONS.svelte, size: 'xl' },
-    { name: 'Tailwind', icon: ICONS.tailwind, size: 'xl' },
-    { name: 'TypeScript', icon: ICONS.code, size: 'lg', isText: true },
-    { name: 'React', icon: ICONS.frontend, size: 'lg' },
+    { name: 'React', icon: ICONS.frontend, size: 'xl' },
+    { name: 'Next.js', icon: ICONS.nextjs, size: 'xl' },
     { name: 'Node.js', icon: ICONS.node, size: 'lg' },
-    { name: 'Java', icon: ICONS.coffee, size: 'lg' },
-    { name: 'JavaScript', icon: ICONS.code, size: 'md', isText: true },
-    { name: 'Kotlin', icon: ICONS.target, size: 'md' },
-    { name: 'Python', icon: ICONS.python, size: 'md' },
+    { name: 'NestJS', icon: ICONS.server, size: 'lg' },
+    { name: 'Tailwind CSS', icon: ICONS.tailwind, size: 'lg' },
+    { name: 'TypeScript', icon: ICONS.code, size: 'lg', isText: true },
+    { name: 'Flutter', icon: ICONS.smartphone, size: 'lg' },
+    { name: 'Prisma', icon: ICONS.prisma, size: 'md' },
     { name: 'Firebase', icon: ICONS.flame, size: 'md' },
     { name: 'Docker', icon: ICONS.server, size: 'md' },
-    { name: 'MySQL', icon: ICONS.database, size: 'md' },
-    { name: 'C#', icon: ICONS.code, size: 'md', isText: true },
     { name: 'GCP', icon: ICONS.cloud, size: 'md' },
-    { name: 'GitHub', icon: ICONS.gitBranch, size: 'md' },
-    { name: 'Android', icon: ICONS.smartphone, size: 'md' },
-    { name: 'Figma', icon: ICONS.palette, size: 'sm' },
-    { name: 'Postman', icon: ICONS.mail, size: 'sm' },
-    { name: 'MongoDB', icon: ICONS.leaf, size: 'sm' },
+    { name: 'Elasticsearch', icon: ICONS.elastic, size: 'md' },
+    { name: 'OpenSearch', icon: ICONS.elastic, size: 'md' },
+    { name: 'TanStack Query', icon: ICONS.api, size: 'md' },
+    { name: 'MySQL', icon: ICONS.database, size: 'md' },
+    { name: 'MongoDB', icon: ICONS.leaf, size: 'md' },
+    { name: 'Kotlin', icon: ICONS.target, size: 'sm' },
+    { name: 'Python', icon: ICONS.python, size: 'sm' },
+    { name: 'Flask', icon: ICONS.code, size: 'sm', isText: true },
+    { name: 'WebSockets', icon: ICONS.sockets, size: 'sm' },
+    { name: 'REST APIs', icon: ICONS.api, size: 'sm' }
   ]);
 
+  /** Showcase of selected web and mobile engineering projects */
   protected readonly projects = signal<{
     num: string; title: string; subtitle: string; description: string;
     tech: string[]; techNames: string[]; mockupEmoji: string;
@@ -197,9 +202,9 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       num: '01',
       title: 'COMPONENT PANTRY',
       subtitle: 'Component Library',
-      description: 'An in-house component library deployed via Verdaccio, used across NTV360 projects. Installed via npm for consistent UI and rapid development.',
-      tech: ['🔺', '🎨'],
-      techNames: ['Angular', 'Tailwind CSS'],
+      description: 'Developed an in-house reusable component library to speed up frontend development across projects.',
+      tech: ['🔺', '📦', '🎨', '📊'],
+      techNames: ['Angular', 'Verdaccio', 'TailwindCSS', 'ApexCharts'],
       mockupEmoji: ICONS.software,
       mockupBg: 'linear-gradient(135deg, #182028, #1e2832)',
       alt: false,
@@ -207,11 +212,11 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     },
     {
       num: '02',
-      title: 'INVENTORY SYSTEM',
-      subtitle: 'HR Management Tool',
-      description: 'An internal tool built during my internship for the HR department to effectively track company inventory and manage employee records.',
-      tech: ['⚛️', '📘', '🗄️'],
-      techNames: ['Next.js', 'TypeScript', 'Prisma'],
+      title: 'NTV DASHBOARD / TRACKING SYSTEM',
+      subtitle: 'HR Management & Tracker',
+      description: 'Created an HR-focused system for tracking inventory and manpower efficiently.',
+      tech: ['🟢', '⚛️', '🗄️'],
+      techNames: ['NestJS', 'Next.js', 'Prisma'],
       mockupEmoji: ICONS.database,
       mockupBg: 'linear-gradient(135deg, #181c28, #222632)',
       alt: true,
@@ -221,9 +226,9 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       num: '03',
       title: 'CONSTRACK',
       subtitle: 'Project Management App',
-      description: 'A comprehensive project management application for construction projects, focusing on employee handling, milestone tracking, task management, and manpower costing. Available on Android and Web.',
-      tech: ['⚛️', '🟢', '🐍', '🎯', '🐳', '🧠'],
-      techNames: ['React', 'Node.js', 'Python', 'Kotlin', 'Docker', 'Integrated Role Based Intelligence'],
+      description: 'Built a cross-platform project management system for construction tracking, covering tasks, milestones, manpower costing, and workflow management with AI-assisted optimization.',
+      tech: ['⚛️', '🟢', '🔥', '☁️'],
+      techNames: ['React', 'NestJS', 'Firebase', 'Google Cloud'],
       mockupEmoji: ICONS.building,
       mockupBg: 'linear-gradient(135deg, #1a2818, #252e20)',
       alt: false,
@@ -249,11 +254,11 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     },
     {
       num: '05',
-      title: 'NTV360 CONTROL PANEL',
+      title: 'CONTROL PANEL',
       subtitle: 'Feature Management Panel',
-      description: 'A control panel tool for N-Compass TV that manages and controls the features of their enterprise applications, streamlining feature flag management and system configuration.',
-      tech: ['🔺', '🟢', '🗄️', '🔥'],
-      techNames: ['Angular', 'Node.js', 'MySQL', 'Firebase'],
+      description: 'Built an internal control system for N-Compass to manage application features and operations.',
+      tech: ['🟢', '⚛️', '🗄️', '🐳', '🧠'],
+      techNames: ['NestJS', 'Next.js', 'Prisma', 'Elasticsearch/OpenSearch', 'Docker', 'TanStack Query'],
       mockupEmoji: ICONS.tv,
       mockupBg: 'linear-gradient(135deg, #181c18, #202620)',
       alt: false,
@@ -295,13 +300,33 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         { src: '/meeting_room3.png', alt: 'Booking Management — room style and availability', label: 'Room setup', type: 'web' },
         { src: '/meeting_room4.png', alt: 'Booking Management — new booking and scheduling', label: 'New booking', type: 'web' }
       ]
+    },
+    {
+      num: '08',
+      title: 'HIKEMATE',
+      subtitle: 'GPS Trail Tracker & Runner Companion',
+      description: 'Developed a mobile hiking app with real-time tracking for pace, elevation, and distance using map integration.',
+      tech: ['💙', '🗺️'],
+      techNames: ['Flutter', 'OpenStreetMap'],
+      mockupEmoji: ICONS.smartphone,
+      mockupBg: 'linear-gradient(135deg, #1c262f, #283747)',
+      alt: true,
+      images: [
+        { src: '/hikemate_1.jpeg', alt: 'HikeMate Dashboard & Stats', label: 'Dashboard', type: 'mobile' },
+        { src: '/hikemate_2.jpeg', alt: 'HikeMate Real-time GPS Tracker', label: 'Real-time GPS', type: 'mobile' },
+        { src: '/hikemate_3.jpeg', alt: 'HikeMate Navigation Map', label: 'Navigation Map', type: 'mobile' },
+        { src: '/hikemate_4.jpeg', alt: 'HikeMate Elevational Tracking', label: 'Elevation Tracking', type: 'mobile' },
+        { src: '/hikemate_5.jpeg', alt: 'HikeMate Activity Summary & Share', label: 'Activity Details', type: 'mobile' },
+        { src: '/hikemate_6.jpeg', alt: 'HikeMate Premium Dashboard', label: 'Dashboard Alt', type: 'mobile' },
+        { src: '/hikemate_7.jpeg', alt: 'HikeMate Settings & Personal Goals', label: 'Settings', type: 'mobile' }
+      ]
     }
   ]);
 
+  /** Comprehensive narrative highlighting top career achievements and core competencies */
   protected readonly professionalSummary = signal(
-    'Software Engineer & Frontend Developer with a strong background in Information Technology. Proficient in programming languages including Java, Python, and JavaScript, with experience developing responsive web and mobile applications using frameworks such as React, Node.js, and Kotlin. Familiar with cloud platforms like Firebase and Google Cloud, with hands-on experience in database systems like MySQL and MongoDB. Skilled in applying Agile methodologies to projects, collaborating effectively in team environments, and quickly adapting to new technologies. Dedicated to leveraging IT solutions to solve real-world problems and committed to continuously improving technical skills, particularly in quality assurance for every project.'
+    'Results-driven Software Engineer experienced in scalable UI development, full-stack applications, and quality assurance. Skilled in Angular, React, Next.js, Svelte, and Flutter, with expertise in APIs, real-time systems, databases, Docker, and Google Cloud Platform. Passionate about building production-grade applications and maintaining high UI and engineering standards.'
   );
-
   private educationScrollTriggers: ScrollTrigger[] = [];
   private accordionScrollTriggers: ScrollTrigger[] = [];
   private accordionRefreshCall?: gsap.core.Tween;
